@@ -10,7 +10,7 @@
                                     <th>Tags</th>
                                     <th>Comments</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <th colspan="2">Action</th>
 
                                 </tr>
                             </thead>
@@ -46,6 +46,7 @@
         echo "<td> $post_comment_count </td>";
         echo "<td> $post_date</td>";
         echo "<td><a href='posts.php?delete={$post_id}'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+        echo "<td><a href='posts.php?edit={$post_id}'> <button class='btn btn-primary'><i class='fa fa-pencil'></i> Edit</button></a></td>";
         echo "</tr>";
 
 
