@@ -1,4 +1,4 @@
-                        <table class="table table-bordered table-hover table-sm">
+                        <table class="table table-bordered table-hover table-sm ">
                             <thead>
                                 <tr>
                                     <th>Id</th>
