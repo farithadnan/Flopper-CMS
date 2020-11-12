@@ -9,8 +9,8 @@ if (isset($_POST['create_post'])) {
 
 
 	//user superglobal $_FILES to send data thru post
-	$post_image = $_FILES['image']['name']; // image the name of the file input
-	$post_image_temp = $_FILES['image']['tmp_name']; // temporary files, when previewing the name of the file, this also needed to be transfer
+	$post_image = $_FILES['image']['name']; // image the name of the file 
+	$post_image_temp = $_FILES['image']['tmp_name']; // temporary info of the files, when previewing the name of the file, this also needed to be transfer
 
 	$post_tags = $_POST['post_tags'];
 	$post_content = $_POST['post_content'];
@@ -18,13 +18,18 @@ if (isset($_POST['create_post'])) {
 	$post_comment_count = 4;
 
 
-	move_uploaded_file($post_image_temp, "../images/$post_image"); 
+	move_uploaded_file($post_image_temp, "../images/$post_image"); //to move file to the desired location in query below it only stored the file name not its location.
 
 
+	$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tag, post_comment_count, post_status) ";
+
+	$query .= "VALUES({$post_category_id},'$post_title','$post_author', now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')"; //stored the latest date using now() function
+
+	$create_post_query = mysqli_query($connection, $query);
+
+	 confirmQuery($create_post_query);
 }
  ?>
-
-
 
 <!-- enctype multipart/form-data is require if u want to send file thru post-->
 <form action="" method="post" enctype="multipart/form-data">
