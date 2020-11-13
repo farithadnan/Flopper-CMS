@@ -21,7 +21,7 @@
     //find all posts query
 
      $query = "SELECT * FROM posts "; //select all from table posts 
-                $select_posts = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
+     $select_posts = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
 
     while ($row = mysqli_fetch_assoc($select_posts)) 
     { //amek and tukarkan column kepada key, and anak2 column as value dia s
