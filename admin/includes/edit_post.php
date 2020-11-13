@@ -42,7 +42,28 @@
 
 	<div class="form-group">
 		<label for="post_category">Post Category</label>
-		<input type="text" class="form-control" name="post_category_id" value="<?php echo $post_category_id; ?>">
+
+		<select class="form-control" name="post_category" id="post_category">
+<?php 
+
+
+     $query = "SELECT * FROM categories";
+     $select_categories = mysqli_query($connection, $query); 
+
+     confirmQuery($select_categories);
+
+     while ($row = mysqli_fetch_assoc( $select_categories)) { 
+     $cat_id = $row['cat_id'];
+     $cat_title = $row['cat_title'];
+
+     	echo "<option value='{$cat_id}'>{$cat_title}</option>";
+
+
+	 }
+
+ ?>
+
+		</select>
 	</div>	
 
 	<div class="form-group">
@@ -56,8 +77,10 @@
 	</div>
 
 	<div class="form-group">
-		<label for="image">Post Image</label>
-		<input type="file" class="form-control" name="image" value="<?php echo $post_title; ?>">
+	<img width="100" src="../images/<?php echo  $post_image; ?>">
+
+<!-- 		<label for="image">Post Image</label>
+		<input type="file" class="form-control" name="image" value="<?php echo $post_title; ?>"> -->
 	</div>
 
 	<div class="form-group">
@@ -67,9 +90,7 @@
 
 	<div class="form-group">
 		<label for="post_tags">Post Content</label>
-		<textarea type="text" class="form-control" name="post_content" id="" cols="30" rows="10" >
-			<?php echo $post_content; ?>
-		</textarea>
+		<textarea type="text" class="form-control" name="post_content" id="" cols="30" rows="10" ><?php echo $post_content; ?></textarea>
 	</div>
 
 	<div class="form-group">

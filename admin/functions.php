@@ -46,7 +46,9 @@ function findAllCategories() {
 	//find all categories query
 
 	 $query = "SELECT * FROM categories "; //select all from table categories 
-	            $select_categories = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
+	 $select_categories = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
+
+
 
 	while ($row = mysqli_fetch_assoc($select_categories)) 
 	{ //amek and tukarkan column kepada key, and anak2 column as value dia s
