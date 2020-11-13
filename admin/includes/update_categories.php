@@ -22,7 +22,7 @@
 
                                      ?>
 
-                                    <?php  //update category
+                                    <?php  //update category; most likely this one using cat_id that been defined at function   editCategories() [function.php]
                                             if(isset($_POST['update_category']))
                                             {
                                                 $the_cat_title = $_POST['cat_title']; 
