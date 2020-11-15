@@ -39,7 +39,32 @@
         echo "<td> $post_id </td>";
         echo "<td> $post_author </td>";
         echo "<td> $post_title </td>";
-        echo "<td> $post_category_id </td>";
+
+
+
+        //THIS ONE WILL RELATE THE POST CATEGORY ID FROM TABLE POST WITH CAT ID IN TABLE CATEGORIES
+         $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
+         $select_categories_id = mysqli_query($connection, $query); 
+
+         while ($row = mysqli_fetch_assoc( $select_categories_id )) { 
+         $cat_id = $row['cat_id'];
+         $cat_title = $row['cat_title'];
+
+
+
+
+
+
+        echo "<td> {$cat_title} </td>";
+
+        }
+
+
+
+
+
+
+
         echo "<td> $post_status </td>";
         echo "<td><img class='img-responsive' width='100' src='../images/$post_image' alt='images'>  </td>";
         echo "<td> $post_tag </td>";
