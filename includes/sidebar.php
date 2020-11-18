@@ -48,8 +48,9 @@
 <?php 
                         while ($row = mysqli_fetch_assoc($select_all_categories_sidebar)) { //amek and tukarkan column kepada key, and anak2 column as value dia s
                             $cat_title = $row['cat_title'];
+                            $cat_id = $row['cat_id'];
 
-                            echo "<li><a href='#'>{$cat_title}</a></li>";
+                            echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                         }
 
  ?>
