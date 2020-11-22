@@ -72,8 +72,8 @@
         echo "<td> $post_date</td>";
 
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
-        echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'> <button class='btn btn-primary'><i class='fa fa-pencil'></i> Edit</button></a></td>";
-        echo "<td><a href='posts.php?delete={$post_id}'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+        echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'> <button class='btn btn-primary'><i class='fa fa-pencil'></i> Edit</button></a> <a href='posts.php?delete={$post_id}'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+        
         echo "</tr>";
 
 
