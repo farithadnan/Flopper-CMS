@@ -60,13 +60,31 @@
 
         echo "<td> $comment_email </td>";
         echo "<td> $comment_status </td>";
-        echo "<td> som title </td>";
+
+
+        $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
+        $select_post_id_query = mysqli_query($connection, $query);
+
+        while ($row = mysqli_fetch_assoc($select_post_id_query)) {
+            $post_id = $row['post_id'];
+            $post_title = $row['post_title'];
+
+            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
+
+        }
+
+        
+
+
+
+
+
         echo "<td> $comment_date </td>";
 
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
-        echo "<td><a href='posts.php?source=edit_post&p_id='> <button class='btn btn-success'><i class='fa fa-check'></i> Approve</button></a></td>";
-        echo "<td><a href='posts.php?delete='> <button class='btn btn-warning'><i class='fa fa-times'></i> Unapproved</button></a></td>";
-        echo "<td><a href='posts.php?delete='> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+        echo "<td><a href='comments.php?approve=$comment_id'> <button class='btn btn-success'><i class='fa fa-check'></i> Approve</button></a></td>";
+        echo "<td><a href='comments.php?unapprove=$comment_id'> <button class='btn btn-warning'><i class='fa fa-times'></i> Unapproved</button></a></td>";
+        echo "<td><a href='comments.php?delete=$comment_id'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
         echo "</tr>";
 
 
@@ -78,18 +96,62 @@
 
 
 <?php 
+if (isset($_GET['approve'])) { //dia hantar comment id; using get, approve=$comment_id same goes for unapproved so dia simpan value comment id kt dalam $_get approve & unapprove
+        $the_comment_id = $_GET['approve'];
+
+
+        $query = "UPDATE comments SET comment_status = 'approve' WHERE comment_id = $the_comment_id   ";
+        $approve_comment_query = mysqli_query($connection, $query);
+
+        if(!$approve_comment_query)
+        {
+            die('QUERY FAILED' . mysqli_error($connection));
+        }
+
+
+        header("Location: comments.php");
+    }
+
+
+
+
+
+if (isset($_GET['unapprove'])) {
+        $the_comment_id = $_GET['unapprove'];
+
+
+        $query = "UPDATE comments SET comment_status = 'unapprove'  WHERE comment_id = $the_comment_id  ";
+        $unapprove_comment_query = mysqli_query($connection, $query);
+
+        if(!$unapprove_comment_query)
+        {
+            die('QUERY FAILED' . mysqli_error($connection));
+        }
+
+
+        header("Location: comments.php");
+    }
+
+
+
+
+
+
 
 if (isset($_GET['delete'])) {
-        $the_post_id = $_GET['delete'];
+        $the_comment_id = $_GET['delete'];
 
 
-        $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
+        $query = "DELETE FROM  comments WHERE comment_id = {$the_comment_id} ";
         $deleteQuery = mysqli_query($connection, $query);
 
         if(!$deleteQuery)
         {
             die('QUERY FAILED' . mysqli_error($connection));
         }
+
+
+        header("Location: comments.php");
     }
 
 
