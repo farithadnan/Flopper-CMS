@@ -15,15 +15,14 @@ if (isset($_POST['create_post'])) {
 	$post_tags = $_POST['post_tags'];
 	$post_content = $_POST['post_content'];
 	$post_date = date('d-m-y'); //using default date function, with a format to capture date
-	$post_comment_count = 4;
 
 
 	move_uploaded_file($post_image_temp, "../images/$post_image"); //to move file to the desired location in query below it only stored the file name not its location.
 
 
-	$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tag, post_comment_count, post_status) ";
+	$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tag,  post_status) ";
 
-	$query .= "VALUES({$post_category_id},'$post_title','$post_author', now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')"; //stored the latest date using now() function
+	$query .= "VALUES({$post_category_id},'$post_title','$post_author', now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_status}')"; //stored the latest date using now() function
 
 	$create_post_query = mysqli_query($connection, $query);
 

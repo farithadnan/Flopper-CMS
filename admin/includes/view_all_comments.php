@@ -100,7 +100,7 @@ if (isset($_GET['approve'])) { //dia hantar comment id; using get, approve=$comm
         $the_comment_id = $_GET['approve'];
 
 
-        $query = "UPDATE comments SET comment_status = 'approve' WHERE comment_id = $the_comment_id   ";
+        $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $the_comment_id   ";
         $approve_comment_query = mysqli_query($connection, $query);
 
         if(!$approve_comment_query)
@@ -120,7 +120,7 @@ if (isset($_GET['unapprove'])) {
         $the_comment_id = $_GET['unapprove'];
 
 
-        $query = "UPDATE comments SET comment_status = 'unapprove'  WHERE comment_id = $the_comment_id  ";
+        $query = "UPDATE comments SET comment_status = 'Unapproved'  WHERE comment_id = $the_comment_id  ";
         $unapprove_comment_query = mysqli_query($connection, $query);
 
         if(!$unapprove_comment_query)

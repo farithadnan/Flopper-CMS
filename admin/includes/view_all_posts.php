@@ -97,6 +97,9 @@ if (isset($_GET['delete'])) {
         {
             die('QUERY FAILED' . mysqli_error($connection));
         }
+
+
+         header("Location: posts.php");
     }
 
 
