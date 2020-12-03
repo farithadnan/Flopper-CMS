@@ -77,7 +77,7 @@
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
         echo "<td><a href='comments.php?approve='> <button class='btn btn-success'><i class='fa fa-check'></i> Approve</button></a></td>";
         echo "<td><a href='comments.php?unapprove='> <button class='btn btn-warning'><i class='fa fa-times'></i> Unapproved</button></a></td>";
-        echo "<td><a href='comments.php?delete='> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+        echo "<td><a href='users.php?delete=$user_id'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
         echo "</tr>";
 
 
@@ -132,10 +132,10 @@ if (isset($_GET['unapprove'])) {
 
 
 if (isset($_GET['delete'])) {
-        $the_comment_id = $_GET['delete'];
+        $the_user_id = $_GET['delete'];
 
 
-        $query = "DELETE FROM  comments WHERE comment_id = {$the_comment_id} ";
+        $query = "DELETE FROM  users WHERE user_id = {$the_user_id} ";
         $deleteQuery = mysqli_query($connection, $query);
 
         if(!$deleteQuery)
@@ -144,7 +144,7 @@ if (isset($_GET['delete'])) {
         }
 
 
-        header("Location: comments.php");
+        header("Location: users.php");
     }
 
 
