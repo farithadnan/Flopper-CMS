@@ -46,9 +46,9 @@
 		if (empty($post_image)) {
 			$query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
 
-			$select_image = mysqli_query($connection, $query);
+			$select_post_image = mysqli_query($connection, $query);
 
-			while($row = mysqli_fetch_assoc($select_image)){
+			while($row = mysqli_fetch_assoc($select_post_image)){
 				$post_image = $row['post_image'];
 
 			}

@@ -7,7 +7,7 @@
                                     <th>Lastname</th>
                                     <th>email</th>
                                     <th>Role</th>
-                                    <th colspan="3">Action</th>
+                                    <th colspan="4">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,9 +75,10 @@
 
 
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
-        echo "<td><a href='comments.php?approve='> <button class='btn btn-success'><i class='fa fa-check'></i> Approve</button></a></td>";
-        echo "<td><a href='comments.php?unapprove='> <button class='btn btn-warning'><i class='fa fa-times'></i> Unapproved</button></a></td>";
+        echo "<td><a href='users.php?change_to_admin={$user_id}'> <button class='btn btn-success'><i class='fa fa-check'></i> Admin</button></a></td>";
+        echo "<td><a href='users.php?change_to_sub={$user_id}'> <button class='btn btn-warning'><i class='fa fa-times'></i> Subscriber</button></a></td>";
         echo "<td><a href='users.php?delete=$user_id'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+        echo "<td><a href='users.php?source=edit_user&edit_user=$user_id'> <button class='btn btn-info'><i class='fa fa-edit'></i> Edit</button></a></td>";
         echo "</tr>";
 
 
@@ -89,40 +90,40 @@
 
 
 <?php 
-if (isset($_GET['approve'])) { //dia hantar comment id; using get, approve=$comment_id same goes for unapproved so dia simpan value comment id kt dalam $_get approve & unapprove
-        $the_comment_id = $_GET['approve'];
+if (isset($_GET['change_to_admin'])) { //dia hantar comment id; using get, approve=$comment_id same goes for unapproved so dia simpan value comment id kt dalam $_get approve & unapprove
+        $the_user_id = $_GET['change_to_admin'];
 
 
-        $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $the_comment_id   ";
-        $approve_comment_query = mysqli_query($connection, $query);
+        $query = "UPDATE users SET user_role = 'admin' WHERE user_id = $the_user_id";
+        $change_to_admin_query = mysqli_query($connection, $query);
 
-        if(!$approve_comment_query)
+        if(!$change_to_admin_query)
         {
             die('QUERY FAILED' . mysqli_error($connection));
         }
 
 
-        header("Location: comments.php");
+        header("Location: users.php");
     }
 
 
 
 
 
-if (isset($_GET['unapprove'])) {
-        $the_comment_id = $_GET['unapprove'];
+if (isset($_GET['change_to_sub'])) {
+        $the_user_id = $_GET['change_to_sub'];
 
 
-        $query = "UPDATE comments SET comment_status = 'Unapproved'  WHERE comment_id = $the_comment_id  ";
-        $unapprove_comment_query = mysqli_query($connection, $query);
+        $query = "UPDATE users SET user_role = 'subscriber'  WHERE user_id = $the_user_id";
+        $change_to_sub_query = mysqli_query($connection, $query);
 
-        if(!$unapprove_comment_query)
+        if(!$change_to_sub_query)
         {
             die('QUERY FAILED' . mysqli_error($connection));
         }
 
 
-        header("Location: comments.php");
+        header("Location: users.php");
     }
 
 
