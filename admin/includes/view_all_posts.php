@@ -1,20 +1,38 @@
-                        <table class="table table-bordered table-hover table-sm ">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Author</th>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Image</th>
-                                    <th>Tags</th>
-                                    <th>Comments</th>
-                                    <th>Date</th>
-                                    <th colspan="2">Action</th>
+<form action="" method="post">
+<table class="table table-bordered table-hover table-sm ">
 
-                                </tr>
-                            </thead>
-                            <tbody>
+
+    <div id="bulkOptionsContainer" class="col-xs-4">
+        <select class="form-control" name="" id="">
+            <option value="">Select Options</option>
+            <option value="">Publish</option>
+            <option value="">Draft</option>
+            <option value="">Delete</option>
+        </select>
+    </div>
+
+    <div class="col-xs-4">
+        <input type="submit" name="submit" class="btn btn-success" value="Apply">
+        <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
+    </div> <br>
+
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Image</th>
+            <th>Tags</th>
+            <th>Comments</th>
+            <th>Date</th>
+            <th colspan="2">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
 
                                 <?php
 
@@ -80,9 +98,9 @@
     }
                                   ?> 
 
-                            </tbody>
-                        </table>
-
+        </tbody>
+    </table>
+    </form>
 
 <?php 
 

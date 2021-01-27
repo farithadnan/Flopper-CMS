@@ -27,6 +27,9 @@ if (isset($_POST['create_post'])) {
 	$create_post_query = mysqli_query($connection, $query);
 
 	 confirmQuery($create_post_query);
+	 echo "<div class='alert alert-success '>";
+	 echo "Post Created Successful " . " " . "(<a href='posts.php'>View Post Detail</a>)";
+	 echo "</div>";
 }
  ?>
 
@@ -71,7 +74,10 @@ if (isset($_POST['create_post'])) {
 
 	<div class="form-group">
 		<label for="post_status">Post Status</label>
-		<input type="text" class="form-control" name="post_status">
+		<select class="form-control" name="post_status">
+			<option value="Publsished">Publish</option>
+			<option value="Draft">Draft</option>
+		</select>
 	</div>
 
 	<div class="form-group">
@@ -86,7 +92,7 @@ if (isset($_POST['create_post'])) {
 
 	<div class="form-group">
 		<label for="post_tags">Post Content</label>
-		<textarea type="text" class="form-control" name="post_content" id="" cols="30" rows="10">
+		<textarea type="text" class="form-control" name="post_content" id="body" cols="30" rows="20">
 		</textarea>
 	</div>
 

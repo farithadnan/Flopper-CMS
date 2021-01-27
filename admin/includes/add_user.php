@@ -27,7 +27,15 @@ if (isset($_POST['create_user'])) {
 	$create_user_query = mysqli_query($connection, $query);
 
 	 confirmQuery($create_user_query);
+		 echo "<div class='alert alert-success '>";
+		 echo "User Created Successful " . " " . "(<a href='users.php'>View User Detail</a>)";
+		 echo "</div>";
+
 }
+
+
+
+
  ?>
 
 <!-- enctype multipart/form-data is require if u want to send file thru post-->
@@ -46,9 +54,9 @@ if (isset($_POST['create_user'])) {
 	<div class="form-group">
 		<label for="user_role">Role</label>
 		<select name="user_role" id="user_role" class="form-control">
-			<option value="subscriber">Select Options..</option>
-			<option value="admin">Admin</option>
-			<option value="subscriber">Subscriber</option>
+			<option value="Subscriber">Select Options..</option>
+			<option value="Admin">Admin</option>
+			<option value="Subscriber">Subscriber</option>
 		</select>
 	</div>
 
