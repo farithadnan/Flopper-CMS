@@ -93,14 +93,25 @@
 
 		<select class="form-control" name="post_category" id="post_category">
 <?php 
+     $queryOption = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
+     $select_categories_option = mysqli_query($connection, $queryOption ); 
 
+     confirmQuery($select_categories_option);
 
-     $query = "SELECT * FROM categories";
+     while ($row_option = mysqli_fetch_assoc($select_categories_option)) { 
+     $cat_id_option = $row_option['cat_id'];
+     $cat_title_option = $row_option['cat_title'];
+
+     	echo "<option value='{$cat_id_option}'>{$cat_title_option}</option>";
+
+	 }
+	
+     $query = "SELECT * FROM categories WHERE cat_id != {$post_category_id}";
      $select_categories = mysqli_query($connection, $query); 
 
      confirmQuery($select_categories);
 
-     while ($row = mysqli_fetch_assoc( $select_categories)) { 
+     while ($row = mysqli_fetch_assoc($select_categories)) { 
      $cat_id = $row['cat_id'];
      $cat_title = $row['cat_title'];
 

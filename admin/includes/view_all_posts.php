@@ -1,17 +1,53 @@
+<?php 
+
+    //this post global is for making sure, that the bulk options that user pick for the post status could be updated here  
+    if(isset($_POST['checkBoxArray']))
+    {
+        foreach ($_POST['checkBoxArray'] as $postValueId) {
+            $bulk_options = $_POST['bulk_options'];
+
+            switch ($bulk_options) {
+                case 'Published':
+                    $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = '{$postValueId}' ";
+                    
+                    $update_to_published_status = mysqli_query($connection, $query);
+                     confirmQuery($update_to_published_status);
+                    break;
+
+                 case 'Draft':
+                    $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = '{$postValueId}' ";
+                    
+                    $update_to_draft_status = mysqli_query($connection, $query);
+                     confirmQuery($update_to_draft_status);
+                    break;
+
+                case 'delete':
+
+                    $query = "DELETE FROM posts WHERE post_id = {$postValueId} ";
+                    $update_to_delete_status = mysqli_query($connection, $query);
+                    confirmQuery($update_to_delete_status);
+                    break;  
+
+            }
+        }
+    }
+
+ ?>
+
 <form action="" method="post">
 <table class="table table-bordered table-hover table-sm ">
 
 
     <div id="bulkOptionsContainer" class="col-xs-4">
-        <select class="form-control" name="" id="">
+        <select class="form-control" name="bulk_options" id="">
             <option value="">Select Options</option>
-            <option value="">Publish</option>
-            <option value="">Draft</option>
-            <option value="">Delete</option>
+            <option value="Published">Publish</option>
+            <option value="Draft">Draft</option>
+            <option value="delete">Delete</option>
         </select>
     </div>
 
-    <div class="col-xs-4">
+    <div id="bulkOptionsButton" class="col-xs-4">
         <input type="submit" name="submit" class="btn btn-success" value="Apply">
         <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
     </div> <br>
@@ -19,6 +55,7 @@
 
     <thead>
         <tr>
+            <th><input  type="checkbox" id="selectAllBoxes" name="selectAllBoxes"></th>
             <th>Id</th>
             <th>Author</th>
             <th>Title</th>
@@ -34,7 +71,7 @@
     </thead>
     <tbody>
 
-                                <?php
+    <?php
 
     //find all posts query
 
@@ -54,6 +91,9 @@
         $post_date = $row['post_date'];
 
         echo "<tr>";
+        ?>
+            <td><input class="checkBoxes" type="checkbox"  name="checkBoxArray[]" value="<?php echo $post_id ?>"></td>
+        <?php
         echo "<td> $post_id </td>";
         echo "<td> $post_author </td>";
         echo "<td> $post_title </td>";
@@ -77,12 +117,6 @@
 
         }
 
-
-
-
-
-
-
         echo "<td> $post_status </td>";
         echo "<td><img class='img-responsive' width='100' src='../images/$post_image' alt='images'>  </td>";
         echo "<td> $post_tag </td>";
@@ -90,13 +124,19 @@
         echo "<td> $post_date</td>";
 
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
-        echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'> <button class='btn btn-primary'><i class='fa fa-pencil'></i> Edit</button></a> <a href='posts.php?delete={$post_id}'> <button class='btn btn-danger'><i class='fa fa-trash'></i> Delete</button></a></td>";
+       echo "<td>
+                <a class='btn btn-info' href='../post.php?p_id={$post_id}'> <i class='fa fa-eye'></i> View</a>
+
+                <a class='btn btn-primary' href='posts.php?source=edit_post&p_id={$post_id}'> <i class='fa fa-pencil'></i> Edit</a> 
+
+                <a class='btn btn-danger' href='posts.php?delete={$post_id}'> <i class='fa fa-trash'></i> Delete</a></td>";
         
         echo "</tr>";
 
 
+
     }
-                                  ?> 
+    ?> 
 
         </tbody>
     </table>

@@ -27,8 +27,11 @@ if (isset($_POST['create_post'])) {
 	$create_post_query = mysqli_query($connection, $query);
 
 	 confirmQuery($create_post_query);
+
+	 $the_post_id = mysqli_insert_id($connection); //this function will extract the latest post id we entered
+
 	 echo "<div class='alert alert-success '>";
-	 echo "Post Created Successful " . " " . "(<a href='posts.php'>View Post Detail</a>)";
+	 echo "Post Created Successful " . " " . "(<a href='../post.php?p_id={$the_post_id}'>View Post</a> | <a href='posts.php'>Edit More Post</a> )";
 	 echo "</div>";
 }
  ?>
@@ -45,6 +48,7 @@ if (isset($_POST['create_post'])) {
 		<label for="post_category">Post Category</label>
 
 		<select class="form-control" name="post_category" id="post_category">
+		<option value="">Select an option</option>
 <?php 
 
 
@@ -75,7 +79,8 @@ if (isset($_POST['create_post'])) {
 	<div class="form-group">
 		<label for="post_status">Post Status</label>
 		<select class="form-control" name="post_status">
-			<option value="Publsished">Publish</option>
+			<option value="Draft">Select an option</option>
+			<option value="Published">Publish</option>
 			<option value="Draft">Draft</option>
 		</select>
 	</div>
