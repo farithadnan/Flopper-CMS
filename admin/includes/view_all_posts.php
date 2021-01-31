@@ -129,7 +129,7 @@
 
                 <a class='btn btn-primary' href='posts.php?source=edit_post&p_id={$post_id}'> <i class='fa fa-pencil'></i> Edit</a> 
 
-                <a class='btn btn-danger' href='posts.php?delete={$post_id}'> <i class='fa fa-trash'></i> Delete</a></td>";
+                <a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" class='btn btn-danger' href='posts.php?delete={$post_id}'> <i class='fa fa-trash'></i> Delete</a></td>";
         
         echo "</tr>";
 
