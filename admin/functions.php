@@ -14,7 +14,7 @@ function users_online(){
 
 			$session = session_id();
 		    $time = time();
-		    $time_out_in_second = 30;
+		    $time_out_in_second = 5;
 		    $time_out = $time - $time_out_in_second;
 
 		    $query = "SELECT * FROM user_online WHERE session = '$session'";
@@ -38,7 +38,7 @@ function users_online(){
 
 	} //get request isset
 }
- users_online();
+users_online();
 
 function confirmQuery($result) {
 
@@ -133,9 +133,4 @@ function deleteCategories() {
 	    header("Location: categories.php");
 	}
 }
-
-
-
-
-
  ?>

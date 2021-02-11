@@ -19,10 +19,11 @@ if (isset($_POST['create_user'])) {
 
 	// move_uploaded_file($post_image_temp, "../images/$post_image"); //to move file to the desired location in query below it only stored the file name not its location.
 
+	$password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
 
 	$query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) ";
 
-	$query .= "VALUES('{$user_firstname}','{$user_lastname}','${user_role}', '{$username}','{$user_email}','{$user_password}')"; //stored the latest date using now() function
+	$query .= "VALUES('{$user_firstname}','{$user_lastname}','${user_role}', '{$username}','{$user_email}','{$password}')"; //stored the latest date using now() function
 
 	$create_user_query = mysqli_query($connection, $query);
 
@@ -43,12 +44,12 @@ if (isset($_POST['create_user'])) {
 
 	<div class="form-group">
 		<label for="user_firstname">First Name</label>
-		<input type="text" class="form-control" name="user_firstname">
+		<input type="text" class="form-control" name="user_firstname" placeholder="Enter First Name">
 	</div>
 
 	<div class="form-group">
 		<label for="user_lastname">Last Name</label>
-		<input type="text" class="form-control" name="user_lastname" id="user_lastname">
+		<input type="text" class="form-control" name="user_lastname" id="user_lastname" placeholder="Enter Last Name">
 	</div>
 
 	<div class="form-group">
@@ -64,17 +65,17 @@ if (isset($_POST['create_user'])) {
 
 	<div class="form-group">
 		<label for="username">Username</label>
-		<input type="text" class="form-control" name="username" id="username">
+		<input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
 	</div>
 
 	<div class="form-group">
 		<label for="post_tags">Email</label>
-		<input type="email" class="form-control" name="user_email" id="user_email">
+		<input type="email" class="form-control" name="user_email" id="user_email" placeholder="example@gmail.com">
 	</div>
 
 	<div class="form-group">
 		<label for="post_tags">Password</label>
-		<input type="password" class="form-control" name="user_password" id="user_password">
+		<input type="password" class="form-control" name="user_password" id="user_password" placeholder="Enter Password">
 	</div>
 
 
