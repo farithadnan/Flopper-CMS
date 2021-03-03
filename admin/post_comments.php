@@ -1,3 +1,23 @@
+<?php include("includes/admin_header.php"); ?>
+
+<div id="wrapper">
+ <!-- Navigation -->
+<?php include("includes/admin_navigation.php"); ?>
+
+
+<div id="page-wrapper">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+
+                <h1 class="page-header">
+                    Welcome to Comments
+                    <small>Author</small>
+                </h1>   
+
 <?php 
 
     //this post global is for making sure, that the bulk options that user pick for the post status could be updated here  
@@ -33,8 +53,7 @@
 
  ?>
 
-
-<form action="" method="post">
+ <form action="" method="post">
 <table class="table table-bordered table-hover table-sm ">
 
 
@@ -67,16 +86,15 @@
         </tr>
     </thead>
     <tbody>
-
-    <?php
+ <?php
 
     //find all posts query
 
-     $query = "SELECT * FROM comments ORDER BY comment_id DESC"; //select all from table posts 
+     $query = "SELECT * FROM comments WHERE comment_post_id =". mysqli_real_escape_string($connection, $_GET['id']) . "" ; 
      $select_comments = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_comments)) 
-    { //amek and tukarkan column kepada key, and anak2 column as value dia s
+    { 
         $comment_id = $row['comment_id'];
         $comment_post_id = $row['comment_post_id'];
         $comment_author = $row['comment_author'];
@@ -111,11 +129,11 @@
 
 
        echo "<td>
-                <a class='btn btn-success' href='comments.php?approve={$comment_id}'> <i class='fa fa-check'></i> Approve</a>
+                <a class='btn btn-success' href='post_comments.php?approve={$comment_id}&id=" . $_GET['id'] . "'> <i class='fa fa-check'></i> Approve</a>
 
-                <a class='btn btn-primary' href='comments.php?unapprove={$comment_id}'> <i class='fa fa-times'></i> Unapprove</a> 
+                <a class='btn btn-primary' href='post_comments.php?unapprove={$comment_id}&id=" . $_GET['id'] . "'> <i class='fa fa-times'></i> Unapprove</a> 
 
-                <a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" class='btn btn-danger' href='comments.php?delete={$comment_id}'> <i class='fa fa-trash'></i> Delete</a></td>";
+                <a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" class='btn btn-danger' href='post_comments.php?delete={$comment_id}&id=" . $_GET['id'] . "'> <i class='fa fa-trash'></i> Delete</a></td>";
      
         
         echo "</tr>";
@@ -129,9 +147,7 @@
     </table>
     </form>
 
-
-
-    <?php 
+  <?php 
 
     if (isset($_GET['delete'])) {
         $the_comment_id = $_GET['delete'];
@@ -146,7 +162,7 @@
         }
 
 
-         header("Location: comments.php");
+         header("Location: post_comments.php?id=" . $_GET['id'] . "");
     }
 
 
@@ -163,7 +179,7 @@
         }
 
 
-         header("Location: comments.php");
+         header("Location: post_comments.php?id=" . $_GET['id'] . "");
     }
 
 
@@ -180,7 +196,62 @@
         }
 
 
-         header("Location: comments.php");
+         header("Location: post_comments.php?id=" . $_GET['id'] . "");
     }
 
      ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+<?php include("includes/admin_footer.php"); ?>

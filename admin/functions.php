@@ -98,9 +98,20 @@ function findAllCategories() {
 		echo"<tr>";
 		echo " <td>{$cat_id}</td>";
 		echo " <td>{$cat_title}</td>";
-		echo "<td><a href='categories.php?delete={$cat_id}' class='btn btn-danger'><i class='fa fa-trash'></i> Delete</a></td>";
-		echo "<td><a href='categories.php?edit={$cat_id}' class='btn btn-info'><i class='fa fa-edit'></i> Update</a></td>";
+	    echo "<td>
+	          <div class='dropdown'>
+	          <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action
+	          <span class='caret'></span></button>
+	          <ul class='dropdown-menu'>
+	            <li><a href='categories.php?edit={$cat_id}'><i class='fa fa-pencil'></i> Edit</a></li>
+	            <li class='divider'></li>
+	            <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='categories.php?delete={$cat_id}'><i class='fa fa-trash'></i> Delete</a></li>
+	          </ul>
+	          </div> 
+	   	    </td>";
 		echo "</tr>";
+
+
 	}
 
 }

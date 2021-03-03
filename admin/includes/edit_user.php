@@ -16,7 +16,7 @@ if(isset($_GET['edit_user']))
 	$user_lastname = $row['user_lastname'];
 	$user_email = $row['user_email'];
 	$user_image = $row['user_image'];
-	$user_role = $row['user_role'];
+	// $user_role = $row['user_role'];
 	}
         
 
@@ -25,7 +25,7 @@ if(isset($_GET['edit_user']))
 
 		$user_firstname = $_POST['user_firstname'];
 		$user_lastname = $_POST['user_lastname'];
-		$user_role = $_POST['user_role'];
+		// $user_role = $_POST['user_role'];
 
 		//user superglobal $_FILES to send data thru post
 		// $post_image = $_FILES['image']['name']; // image the name of the file 
@@ -55,7 +55,7 @@ if(isset($_GET['edit_user']))
 			$query = "UPDATE users SET ";
 			$query .= "user_firstname = '{$user_firstname}', ";
 			$query .= "user_lastname = '{$user_lastname}', ";
-			$query .= "user_role = '{$user_role}', ";
+			// $query .= "user_role = '{$user_role}', ";
 			$query .= "username = '{$username}', ";
 			$query .= "user_email = '{$user_email}', ";
 			$query .= "user_password = '{$hashed_password}' ";
@@ -92,21 +92,21 @@ if(isset($_GET['edit_user']))
 		<input type="text" class="form-control" name="user_lastname" id="user_lastname" value="<?php echo $user_lastname?>">
 	</div>
 
-	<div class="form-group">
+<!-- 	<div class="form-group">
 		<label for="user_role">Role</label>
 		<select name="user_role" id="user_role" class="form-control">
-		<option value="<?php echo $user_role; ?> "><?php echo $user_role; ?></option>
+		<option value="<?php //echo $user_role; ?> "><?php //echo $user_role; ?></option>
 		<?php 
-			if($user_role == 'Admin')
-			{
-				echo "<option value='Subscriber'>Subscriber</option>";
-			} elseif($user_role == 'Subscriber') {
-				echo "<option value='Admin'>Admin</option>";
-			}
+			// if($user_role == 'Admin')
+			// {
+			// 	echo "<option value='Subscriber'>Subscriber</option>";
+			// } elseif($user_role == 'Subscriber') {
+			// 	echo "<option value='Admin'>Admin</option>";
+			// }
 		 ?>
 		</select>
 	</div>
-
+ -->
 
 
 	<div class="form-group">
@@ -126,7 +126,7 @@ if(isset($_GET['edit_user']))
 
 
 	<div class="form-group">
-		<input type="submit" class="btn btn-primary" name="edit_user" value="Create User">
+		<input type="submit" class="btn btn-primary" name="edit_user" value="Update User">
 	</div>
 
 </form>

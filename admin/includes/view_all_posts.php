@@ -155,25 +155,47 @@
         echo "<td> $post_status </td>";
         echo "<td><img class='img-responsive' width='100' src='../images/$post_image' alt='images'>  </td>";
         echo "<td> $post_tag </td>";
-        echo "<td> <i class='fa fa-comments'></i> $post_comment_count </td>";
+
+        // This is to preview comment count for each post, by using mysqli num rows function
+        $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+        $send_comment_query = mysqli_query($connection, $query);
+
+        $row = mysqli_fetch_array($send_comment_query);
+        $comment_id = isset($row['comment_id']);
+        $count_comments = mysqli_num_rows($send_comment_query);
+
+        //
+        
+        echo "<td> <i class='fa fa-comments'></i><a href='post_comments.php?id=$post_id'> $count_comments</a> </td>";
+
+
+
+
         echo "<td> $post_date</td>";
         echo "<td> <i class='fa fa-user'></i> <a href='posts.php?reset={$post_id}'>$post_view_count</a> </td>";
 
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
        echo "<td>
-                <a class='btn btn-info' href='../post.php?p_id={$post_id}'> <i class='fa fa-eye'></i> View</a>
-
-                <a class='btn btn-primary' href='posts.php?source=edit_post&p_id={$post_id}'> <i class='fa fa-pencil'></i> Edit</a> 
-
-                <a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" class='btn btn-danger' href='posts.php?delete={$post_id}'> <i class='fa fa-trash'></i> Delete</a></td>";
-     
-        
+                 <div class='dropdown'>
+                  <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action
+                  <span class='caret'></span></button>
+                  <ul class='dropdown-menu'>
+                    <li><a href='../post.php?p_id={$post_id}'> <i class='fa fa-eye'></i> View</a></li>
+                    <li class='divider'></li>
+                    <li><a href='posts.php?source=edit_post&p_id={$post_id}'><i class='fa fa-pencil'></i> Edit</a></li>
+                    <li class='divider'></li>
+                    <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'><i class='fa fa-trash'></i> Delete</a></li>
+                  </ul>
+                </div> 
+            </td>";
+    
         echo "</tr>";
 
 
 
     }
     ?> 
+
 
         </tbody>
     </table>
