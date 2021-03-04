@@ -67,7 +67,7 @@
     </div>
 
     <div id="bulkOptionsButton" class="col-xs-4">
-        <input type="submit" name="submit" class="btn btn-success" value="Apply">
+        <input type="submit" name="submit" class="btn btn-success" value="Apply" title="Apply Bulk Action">
     </div> 
     <br>
 
@@ -129,11 +129,18 @@
 
 
        echo "<td>
-                <a class='btn btn-success' href='post_comments.php?approve={$comment_id}&id=" . $_GET['id'] . "'> <i class='fa fa-check'></i> Approve</a>
-
-                <a class='btn btn-primary' href='post_comments.php?unapprove={$comment_id}&id=" . $_GET['id'] . "'> <i class='fa fa-times'></i> Unapprove</a> 
-
-                <a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" class='btn btn-danger' href='post_comments.php?delete={$comment_id}&id=" . $_GET['id'] . "'> <i class='fa fa-trash'></i> Delete</a></td>";
+                 <div class='dropdown'>
+                  <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-cogs'></i> Action
+                  <span class='caret'></span></button>
+                  <ul class='dropdown-menu'>
+                    <li><a href='post_comments.php?approve={$comment_id}&id=" . $_GET['id'] . "' title='Approve Post'> <i class='fa fa-check'></i> Approve</a></li>
+                    <li class='divider'></li>
+                    <li><a href='post_comments.php?unapprove={$comment_id}&id=" . $_GET['id'] . "' title='Unapprove Post'><i class='fa fa-times'></i> Unapprove</a></li>
+                    <li class='divider'></li>
+                    <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='post_comments.php?delete={$comment_id}&id=" . $_GET['id'] . "' title='Delete Post'><i class='fa fa-trash'></i> Delete</a></li>
+                  </ul>
+                 </div> 
+            </td>";
      
         
         echo "</tr>";

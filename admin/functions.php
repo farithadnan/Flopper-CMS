@@ -100,12 +100,12 @@ function findAllCategories() {
 		echo " <td>{$cat_title}</td>";
 	    echo "<td>
 	          <div class='dropdown'>
-	          <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action
+	          <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-cogs'></i> Action
 	          <span class='caret'></span></button>
 	          <ul class='dropdown-menu'>
-	            <li><a href='categories.php?edit={$cat_id}'><i class='fa fa-pencil'></i> Edit</a></li>
+	            <li><a href='categories.php?edit={$cat_id}' title='Edit Category'><i class='fa fa-pencil'></i> Edit</a></li>
 	            <li class='divider'></li>
-	            <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='categories.php?delete={$cat_id}'><i class='fa fa-trash'></i> Delete</a></li>
+	            <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='categories.php?delete={$cat_id}' title='Delete Category'><i class='fa fa-trash'></i> Delete</a></li>
 	          </ul>
 	          </div> 
 	   	    </td>";

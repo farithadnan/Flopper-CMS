@@ -81,8 +81,8 @@
     </div>
 
     <div id="bulkOptionsButton" class="col-xs-4">
-        <input type="submit" name="submit" class="btn btn-success" value="Apply">
-        <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
+        <input type="submit" name="submit" class="btn btn-success " value="Apply" title="Apply Bulk Action">
+        <a class="btn btn-primary" href="posts.php?source=add_post" title="Add New Post">Add New</a>
     </div> <br>
 
 
@@ -177,14 +177,14 @@
         //source=edit_post is to get user go to the edit post page, while p_id = post id is to stored the the id of the post, & is used if u wanted to set more than one parameter when using $_GET 
        echo "<td>
                  <div class='dropdown'>
-                  <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Action
+                  <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-cogs'></i> Action
                   <span class='caret'></span></button>
                   <ul class='dropdown-menu'>
-                    <li><a href='../post.php?p_id={$post_id}'> <i class='fa fa-eye'></i> View</a></li>
+                    <li><a href='../post.php?p_id={$post_id}' title='View Post'> <i class='fa fa-eye'></i> View</a></li>
                     <li class='divider'></li>
-                    <li><a href='posts.php?source=edit_post&p_id={$post_id}'><i class='fa fa-pencil'></i> Edit</a></li>
+                    <li><a href='posts.php?source=edit_post&p_id={$post_id}' title='Edit Post'><i class='fa fa-pencil'></i> Edit</a></li>
                     <li class='divider'></li>
-                    <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}'><i class='fa fa-trash'></i> Delete</a></li>
+                    <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='posts.php?delete={$post_id}' title='Delete Post'><i class='fa fa-trash'></i> Delete</a></li>
                   </ul>
                 </div> 
             </td>";

@@ -48,7 +48,7 @@
     </div>
 
     <div id="bulkOptionsButton" class="col-xs-4">
-        <input type="submit" name="submit" class="btn btn-success" value="Apply">
+        <input type="submit" name="submit" class="btn btn-success" value="Apply" title="Apply Bulk Option">
     </div> 
     <br>
 
@@ -111,11 +111,18 @@
 
 
        echo "<td>
-                <a class='btn btn-success' href='comments.php?approve={$comment_id}'> <i class='fa fa-check'></i> Approve</a>
-
-                <a class='btn btn-primary' href='comments.php?unapprove={$comment_id}'> <i class='fa fa-times'></i> Unapprove</a> 
-
-                <a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" class='btn btn-danger' href='comments.php?delete={$comment_id}'> <i class='fa fa-trash'></i> Delete</a></td>";
+                  <div class='dropdown'>
+                  <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-cogs'></i> Action
+                  <span class='caret'></span></button>
+                      <ul class='dropdown-menu'>
+                        <li><a href='comments.php?approve={$comment_id}' title='Approve Post'> <i class='fa fa-check'></i> Approve</a></li>
+                        <li class='divider'></li>
+                        <li><a href='comments.php?unapprove={$comment_id}' title='Unapprove Post'><i class='fa fa-times'></i> Unapprove</a></li>
+                        <li class='divider'></li>
+                        <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='comments.php?delete={$comment_id}' title='Delete Post'><i class='fa fa-trash'></i> Delete</a></li>
+                      </ul>
+                  </div>    
+                </td>";
      
         
         echo "</tr>";
@@ -124,6 +131,8 @@
 
     }
     ?> 
+
+
 
         </tbody>
     </table>

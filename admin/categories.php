@@ -22,7 +22,7 @@
 
                             <form method="post" action="categories.php">
                                 <div class="form-group">
-                                    <label for="cat-title" class="for"> Add Category</label>
+                                    <label for="cat-title" class="for"> Add post Category</label>
                                     <input class="form-control" type="text" name="cat_title">
                                 </div>
                                 <div class="form-group">
