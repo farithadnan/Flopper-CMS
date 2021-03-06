@@ -17,23 +17,61 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-
+                    <li class="dropdown">
+                              <a class='dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-cogs'></i> Category
+                              <span class='caret'></span></a>
+                                  <ul class='dropdown-menu'>
                     <?php 
 
                         $query = "SELECT * FROM categories"; //select all from table categories 
                         $select_all_categories_query = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
 
+
                         while ($row = mysqli_fetch_assoc($select_all_categories_query)) { //amek and tukarkan column kepada key, and anak2 column as value dia s
                             $cat_title = $row['cat_title'];
+                            $cat_id = $row['cat_id'];
 
-                            echo "<li><a href='#'>{$cat_title}</a></li>";
+
+                            $category_class = '';
+                            $registration_class = '';
+                            $contact_class = '';
+
+                            $pageName = basename($_SERVER['PHP_SELF']);
+                            $registration = 'registration.php';
+                            $contact = 'contact.php';
+
+                            if(isset($_GET['category']) && $_GET['category'] == $cat_id )
+                            {
+                                $category_class = 'active';
+                            } 
+                            elseif ($pageName == $registration)
+                            {
+                                $registration_class = 'active';
+                            }
+                            elseif ($pageName == $contact)
+                            {
+                                $contact_class = 'active';
+                            }
+ 
+
+                            echo "<li class='$category_class'><a  href='category.php?category={$cat_id}'>{$cat_title}</a></li>";       
                         }
+                   
+
                      ?>
+                     </ul></li>
+                     
+                    <?php if (isset($_SESSION['user_role'])) : ?>
                     <li>
                         <a href="admin">Admin</a> 
                     </li>
-                    <li>
+                    <?php endif; ?>
+
+                    <li class="<?php echo $registration_class; ?>">
                         <a href="registration.php">Registration</a> 
+                    </li>
+                    <li  class="<?php echo $contact_class; ?>">
+                        <a href="contact.php">Contact</a> 
                     </li>
 
                 <?php 
@@ -45,6 +83,7 @@
                             echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
                         }
                      }
+
                  ?>
 
 

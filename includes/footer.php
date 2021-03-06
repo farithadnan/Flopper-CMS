@@ -2,7 +2,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; Farith Syariffudin. All Right Reserved <label id="copyright" style="font-weight:normal;"></label></p>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -11,6 +11,12 @@
 
     </div>
     <!-- /.container -->
+    <!-- Get current year -->
+    <script>
+      var d = new Date(); 
+      var n = d.getFullYear(); 
+      document.getElementById("copyright").innerHTML = n;
+    </script>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

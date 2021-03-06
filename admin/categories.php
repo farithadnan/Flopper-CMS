@@ -18,6 +18,7 @@
                             <small>Author</small>
                         </h1>
                         <div class="col-xs-6">
+                        <?php include("includes/delete_modal.php"); ?>
                          <?php insert_categories(); ?>
 
                             <form method="post" action="categories.php">
@@ -73,6 +74,22 @@
 
 
         <!-- /#page-wrapper -->
+<script>
 
+    $(document).ready(function(){
+
+        $(".delete_link").on('click', function(){
+
+            var id = $(this).attr("rel");
+            var delete_url = "categories.php?delete=" + id + " ";
+
+
+            $(".modal_delete_link").attr("href", delete_url); 
+
+            $("#delModal").modal("show")
+        });
+    });
+
+</script>
 
 <?php include("includes/admin_footer.php"); ?>

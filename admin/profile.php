@@ -20,19 +20,19 @@
 <?php 
     if(isset($_SESSION['username']))
     {
-        $username = $_SESSION['username'];
+        $username = escape($_SESSION['username']);
 
         $query = "SELECT * FROM users WHERE username = '{$username}'";
 
         $select_user_profile_query = mysqli_query($connection, $query);
 
         while ($row = mysqli_fetch_array($select_user_profile_query)) {
-            $user_id = $row['user_id'];
-            $Username = $row['username'];
-            $user_password = $row['user_password'];
-            $user_firstname = $row['user_firstname'];
-            $user_lastname = $row['user_lastname'];
-            $user_email = $row['user_email'];
+            $user_id = escape($row['user_id']);
+            $Username = escape($row['username']);
+            $user_password = escape($row['user_password']);
+            $user_firstname = escape($row['user_firstname']);
+            $user_lastname = escape($row['user_lastname']);
+            $user_email = escape($row['user_email']);
             // $user_image = $row['user_image'];
         }
    
@@ -40,16 +40,16 @@
     if (isset($_POST['edit_user'])) {
 
 
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
+        $user_firstname = escape($_POST['user_firstname']);
+        $user_lastname = escape($_POST['user_lastname']);
 
         //user superglobal $_FILES to send data thru post
         // $post_image = $_FILES['image']['name']; // image the name of the file 
         // $post_image_temp = $_FILES['image']['tmp_name']; // temporary info of the files, when previewing the name of the file, this also needed to be transfer
 
-        $username = $_POST['username'];
-        $user_email = $_POST['user_email'];
-        $user_password = $_POST['user_password'];
+        $username = escape($_POST['username']);
+        $user_email = escape($_POST['user_email']);
+        $user_password = escape($_POST['user_password']);
         // $post_date = date('d-m-y'); //using default date function, with a format to capture date
 
         if(!empty($user_password))
@@ -60,7 +60,7 @@
 
             $row = mysqli_fetch_array($get_user_query);
 
-            $db_user_password = $row['user_password'];
+            $db_user_password = escape($row['user_password']);
 
             if($db_user_password != $user_password)
             {

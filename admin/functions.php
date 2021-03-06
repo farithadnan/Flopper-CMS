@@ -1,4 +1,12 @@
 <?php 
+function escape($string) {
+
+	global $connection;
+
+	return mysqli_real_escape_string($connection, trim($string));
+}
+
+
 function users_online(){
 
 	if(isset($_GET['onlineusers']))
@@ -57,7 +65,7 @@ function insert_categories() {
     if(isset($_POST['submit']))
     {
 
-    $cat_title = $_POST['cat_title'];
+    $cat_title = escape($_POST['cat_title']);
 
 	    if($cat_title =="" || empty($cat_title))
 	    {
@@ -92,8 +100,8 @@ function findAllCategories() {
 
 	while ($row = mysqli_fetch_assoc($select_categories)) 
 	{ //amek and tukarkan column kepada key, and anak2 column as value dia s
-		$cat_id = $row['cat_id'];
-		$cat_title = $row['cat_title'];
+		$cat_id = escape($row['cat_id']);
+		$cat_title = escape($row['cat_title']);
 
 		echo"<tr>";
 		echo " <td>{$cat_id}</td>";
@@ -105,7 +113,7 @@ function findAllCategories() {
 	          <ul class='dropdown-menu'>
 	            <li><a href='categories.php?edit={$cat_id}' title='Edit Category'><i class='fa fa-pencil'></i> Edit</a></li>
 	            <li class='divider'></li>
-	            <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='categories.php?delete={$cat_id}' title='Delete Category'><i class='fa fa-trash'></i> Delete</a></li>
+	            <li><a rel='$cat_id' href='javascript:void(0)' class='delete_link' title='Delete Category'><i class='fa fa-trash'></i> Delete</a></li>
 	          </ul>
 	          </div> 
 	   	    </td>";
@@ -122,8 +130,14 @@ function editCategories() {
 	global $connection;
 	
     if (isset($_GET['edit'])) {
-        $cat_id = $_GET['edit'];
-        include "includes/update_categories.php";
+		if(isset($_SESSION['user_role']))
+		{
+		    if($_SESSION['user_role'] == 'Admin')
+		    {
+		      $cat_id = escape( $_GET['edit']);
+              include "includes/update_categories.php";    
+		    }
+		}
     }
 
 }
@@ -134,14 +148,25 @@ function deleteCategories() {
 
 	global $connection;
 
+
 	//delete query
 	//this one will store cat id, from the link after delete=
 	if(isset($_GET['delete']))
 	{
-	    $the_cat_id = $_GET['delete']; 
-	    $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id}";
-	    $delete_query = mysqli_query($connection, $query);
-	    header("Location: categories.php");
+		if(isset($_SESSION['user_role']))
+		{
+		    if($_SESSION['user_role'] == 'Admin')
+		    {
+			    $the_cat_id =escape( $_GET['delete']); 
+			    $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id}";
+			    $delete_query = mysqli_query($connection, $query);
+			    header("Location: categories.php");   
+		    }
+    	}
+
 	}
 }
+
+
+
  ?>

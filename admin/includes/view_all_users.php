@@ -1,9 +1,10 @@
 <?php 
+    include("delete_modal.php");
 
     if(isset($_POST['checkBoxArray']))
     {
         foreach ($_POST['checkBoxArray'] as $userValueId) {
-            $bulk_options = $_POST['bulk_options'];
+            $bulk_options = escape($_POST['bulk_options']);
 
             switch ($bulk_options) {
                 case 'Admin':
@@ -74,14 +75,14 @@
 
     while ($row = mysqli_fetch_assoc($select_users)) 
     { //amek and tukarkan column kepada key, and anak2 column as value dia s
-        $user_id = $row['user_id'];
-        $Username = $row['username'];
-        $user_password = $row['user_password'];
-        $user_firstname = $row['user_firstname'];
-        $user_lastname = $row['user_lastname'];
-        $user_email = $row['user_email'];
+        $user_id = escape($row['user_id']);
+        $Username = escape($row['username']);
+        $user_password = escape($row['user_password']);
+        $user_firstname = escape($row['user_firstname']);
+        $user_lastname = escape($row['user_lastname']);
+        $user_email = escape($row['user_email']);
         $user_image = $row['user_image'];
-        $user_role = $row['user_role'];
+        $user_role = escape($row['user_role']);
         
 
 
@@ -109,7 +110,7 @@
                     <li class='divider'></li>
                     <li><a href='users.php?source=edit_user&edit_user=$user_id' title='Edit User'><i class='fa fa-edit'></i> Edit</a></li>
                     <li class='divider'></li>                    
-                    <li><a onClick=\"javascript: return confirm('Are you sure you want to delete?');\" href='users.php?delete=$user_id' title='Delete User'><i class='fa fa-trash'></i> Delete</a></li>
+                    <li><a rel='$user_id' href='javascript:void(0)' class='delete_link' title='Delete User'><i class='fa fa-trash'></i> Delete</a></li>
                   </ul>
                 </div> 
                 </td>";
@@ -126,40 +127,56 @@
 
 <?php 
 if (isset($_GET['change_to_admin'])) { //dia hantar comment id; using get, approve=$comment_id same goes for unapproved so dia simpan value comment id kt dalam $_get approve & unapprove
-        $the_user_id = $_GET['change_to_admin'];
 
-
-        $query = "UPDATE users SET user_role = 'Admin' WHERE user_id = {$the_user_id}";
-        $change_to_admin_query = mysqli_query($connection, $query);
-
-        if(!$change_to_admin_query)
+    if(isset($_SESSION['user_role']))
+    {
+        if($_SESSION['user_role'] =='Admin')
         {
-            die('QUERY FAILED' . mysqli_error($connection));
+            $the_user_id =  escape( $_GET['change_to_admin']);
+
+
+            $query = "UPDATE users SET user_role = 'Admin' WHERE user_id = {$the_user_id}";
+            $change_to_admin_query = mysqli_query($connection, $query);
+
+            if(!$change_to_admin_query)
+            {
+                die('QUERY FAILED' . mysqli_error($connection));
+            }
+
+
+            header("Location: users.php");
         }
-
-
-        header("Location: users.php");
     }
+
+}
 
 
 
 
 
 if (isset($_GET['change_to_sub'])) {
-        $the_user_id = $_GET['change_to_sub'];
 
-
-        $query = "UPDATE users SET user_role = 'Subscriber'  WHERE user_id = {$the_user_id}";
-        $change_to_sub_query = mysqli_query($connection, $query);
-
-        if(!$change_to_sub_query)
+    if(isset($_SESSION['user_role']))
+    {
+        if($_SESSION['user_role'] =='Admin')
         {
-            die('QUERY FAILED' . mysqli_error($connection));
+            $the_user_id = escape($_GET['change_to_sub']);
+
+
+            $query = "UPDATE users SET user_role = 'Subscriber'  WHERE user_id = {$the_user_id}";
+            $change_to_sub_query = mysqli_query($connection, $query);
+
+            if(!$change_to_sub_query)
+            {
+                die('QUERY FAILED' . mysqli_error($connection));
+            }
+
+
+            header("Location: users.php");
         }
-
-
-        header("Location: users.php");
     }
+
+}
 
 
 
@@ -168,23 +185,45 @@ if (isset($_GET['change_to_sub'])) {
 
 
 if (isset($_GET['delete'])) {
-        $the_user_id = $_GET['delete'];
 
-
-        $query = "DELETE FROM  users WHERE user_id = {$the_user_id} ";
-        $deleteQuery = mysqli_query($connection, $query);
-
-        if(!$deleteQuery)
+        if(isset($_SESSION['user_role']))
         {
-            die('QUERY FAILED' . mysqli_error($connection));
+            if($_SESSION['user_role'] =='Admin')
+            {
+                $the_user_id =escape($_GET['delete']);
+
+
+                $query = "DELETE FROM  users WHERE user_id = {$the_user_id} ";
+                $deleteQuery = mysqli_query($connection, $query);
+
+                if(!$deleteQuery)
+                {
+                    die('QUERY FAILED' . mysqli_error($connection));
+                }
+
+
+                header("Location: users.php");
+            }
         }
-
-
-        header("Location: users.php");
     }
 
 
-
-
-
  ?>
+
+ <script>
+
+    $(document).ready(function(){
+
+        $(".delete_link").on('click', function(){
+
+            var id = $(this).attr("rel");
+            var delete_url = "users.php?delete=" + id + " ";
+
+
+            $(".modal_delete_link").attr("href", delete_url); 
+
+            $("#delModal").modal("show")
+        });
+    });
+
+</script>

@@ -3,17 +3,17 @@
 if (isset($_POST['create_user'])) {
 
 
-	$user_firstname = $_POST['user_firstname'];
-	$user_lastname = $_POST['user_lastname'];
-	$user_role = $_POST['user_role'];
+	$user_firstname = escape($_POST['user_firstname']);
+	$user_lastname = escape($_POST['user_lastname']);
+	$user_role = escape($_POST['user_role']);
 
 	//user superglobal $_FILES to send data thru post
 	// $post_image = $_FILES['image']['name']; // image the name of the file 
 	// $post_image_temp = $_FILES['image']['tmp_name']; // temporary info of the files, when previewing the name of the file, this also needed to be transfer
 
-	$username = $_POST['username'];
-	$user_email = $_POST['user_email'];
-	$user_password = $_POST['user_password'];
+	$username = escape($_POST['username']);
+	$user_email = escape($_POST['user_email']);
+	$user_password = escape($_POST['user_password']);
 	// $post_date = date('d-m-y'); //using default date function, with a format to capture date
 
 
@@ -44,12 +44,12 @@ if (isset($_POST['create_user'])) {
 
 	<div class="form-group">
 		<label for="user_firstname">First Name</label>
-		<input type="text" class="form-control" name="user_firstname" placeholder="Enter First Name">
+		<input type="text" class="form-control" name="user_firstname" placeholder="Enter First Name" required>
 	</div>
 
 	<div class="form-group">
 		<label for="user_lastname">Last Name</label>
-		<input type="text" class="form-control" name="user_lastname" id="user_lastname" placeholder="Enter Last Name">
+		<input type="text" class="form-control" name="user_lastname" id="user_lastname" placeholder="Enter Last Name" required>
 	</div>
 
 	<div class="form-group">
@@ -65,17 +65,17 @@ if (isset($_POST['create_user'])) {
 
 	<div class="form-group">
 		<label for="username">Username</label>
-		<input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
+		<input type="text" class="form-control" name="username" id="username" placeholder="Enter Username" required>
 	</div>
 
 	<div class="form-group">
 		<label for="post_tags">Email</label>
-		<input type="email" class="form-control" name="user_email" id="user_email" placeholder="example@gmail.com">
+		<input type="email" class="form-control" name="user_email" id="user_email" placeholder="example@gmail.com" required>
 	</div>
 
 	<div class="form-group">
 		<label for="post_tags">Password</label>
-		<input type="password" class="form-control" name="user_password" id="user_password" placeholder="Enter Password">
+		<input type="password" class="form-control" name="user_password" id="user_password" placeholder="Enter Password" required>
 	</div>
 
 

@@ -38,43 +38,50 @@
                     //if page 2, then it will multiply by 5 which becoming 10, then it will be substracted to 5 will equal to 5, then this 5 is the actual number of post will be display at the page 2 
                 }
 
-                //checking the total number of publish post in index.php
-                $post_query_count = "SELECT * FROM posts  WHERE post_status = 'Published'";
+                if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin' ) {
+                    $post_query_count = "SELECT * FROM posts";
+                }
+                else {
+
+                    $post_query_count = "SELECT * FROM posts  WHERE post_status = 'Published'";
+
+                }               
+            
                 $find_count = mysqli_query($connection, $post_query_count);
                 $count = mysqli_num_rows($find_count);
+                if ($count < 1) {
+                   echo "<h1 class='text-center'>No posts available</h1>";
+                }
+                else {
 
                  $count = ceil($count / $per_page);//round off the number if its float, this will determine how many pagination we will get in the post if one page is max with 5 post
 
 
-                $query = "SELECT * FROM posts WHERE post_status = 'Published' LIMIT $page_1, $per_page"; 
+                $query = "{$post_query_count}  LIMIT $page_1, $per_page"; 
                 // Limit (first data), (how many data)
                 $select_all_posts_query = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
+                    $post_user = $row['post_user'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content =  substr($row['post_content'],0,100);
 
                     $post_status = $row['post_status'];
-                    if($post_status  == 'Published')
-                    {
+
 
                     ?>
 
 
-                <h1 class="page-header">
-                    <?php echo $count; ?>
-                </h1>
 
                 <!-- First Blog Post -->
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="author_posts.php?author=<?php echo $post_author ?>&p_id=<?php echo $post_id ?>"><?php echo $post_author ?></a>
+                    by <a href="author_posts.php?author=<?php echo $post_user ?>&p_id=<?php echo $post_id ?>"><?php echo $post_user ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted <?php echo $post_date ?></p>
                 <hr>
