@@ -22,7 +22,6 @@
                               <span class='caret'></span></a>
                                   <ul class='dropdown-menu'>
                     <?php 
-
                         $query = "SELECT * FROM categories"; //select all from table categories 
                         $select_all_categories_query = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
 
@@ -30,8 +29,7 @@
                         while ($row = mysqli_fetch_assoc($select_all_categories_query)) { //amek and tukarkan column kepada key, and anak2 column as value dia s
                             $cat_title = $row['cat_title'];
                             $cat_id = $row['cat_id'];
-
-
+                    
                             $category_class = '';
                             $registration_class = '';
                             $contact_class = '';
@@ -53,14 +51,13 @@
                                 $contact_class = 'active';
                             }
  
-
-                            echo "<li class='$category_class'><a  href='category.php?category={$cat_id}'>{$cat_title}</a></li>";       
-                        }
-                   
-
+                            echo "<li class='$category_class'><a  href='category.php?category={$cat_id}'>{$cat_title}</a></li>";                            
+                            
+                        }                   
                      ?>
-                     </ul></li>
-                     
+                     </ul>
+                    </li>
+                    
                     <?php if (isset($_SESSION['user_role'])) : ?>
                     <li>
                         <a href="admin">Admin</a> 
@@ -74,7 +71,7 @@
                         <a href="contact.php">Contact</a> 
                     </li>
 
-                <?php 
+                    <?php 
                      if (isset($_SESSION['user_role'])) {
                         
                         if(isset($_GET['p_id']))
@@ -83,12 +80,7 @@
                             echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
                         }
                      }
-
-                 ?>
-
-
-
-
+                    ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

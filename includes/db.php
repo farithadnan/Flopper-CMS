@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+	ob_start(); 
 	//much more secure way by using intiating connection with constant
 	$db['db_host'] = "localhost";
 	$db['db_user'] = "root";

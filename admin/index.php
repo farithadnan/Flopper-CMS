@@ -1,3 +1,4 @@
+ <!-- Header -->
 <?php include("includes/admin_header.php"); ?>
 
     <div id="wrapper">
@@ -27,8 +28,7 @@
                 <!-- /.row -->
 
        
-                <!-- /.row -->
-                
+                <!-- Body -->
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-primary">
@@ -39,13 +39,8 @@
                                     </div>
                                     <div class="col-xs-9 text-right">
 
-                                        <?php 
-                                            $query = "SELECT * FROM posts";
-                                            $select_all_post = mysqli_query($connection, $query);
-                                            $post_count = mysqli_num_rows($select_all_post);
-
-                                            echo "<div class='huge'>{$post_count}</div>";
-                                         ?>
+                                    <div class='huge'><?php echo  $post_count =  recordCount('posts'); ?></div>
+                                   
                                         <div>Posts</div>
                                     </div>
                                 </div>
@@ -67,13 +62,7 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <?php 
-                                            $query = "SELECT * FROM comments";
-                                            $select_all_comment = mysqli_query($connection, $query);
-                                            $comment_counts = mysqli_num_rows($select_all_comment);
-
-                                            echo "<div class='huge'>{$comment_counts}</div>";
-                                         ?>
+                                        <div class='huge'><?php echo  $comment_counts =  recordCount('comments'); ?></div>
                                       <div>Comments</div>
                                     </div>
                                 </div>
@@ -95,14 +84,7 @@
                                         <i class="fa fa-user fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <?php 
-                                        $query = "SELECT * FROM users";
-                                        $select_all_user = mysqli_query($connection, $query);
-                                        $user_counts = mysqli_num_rows($select_all_user);
-
-                                        echo "<div class='huge'>{$user_counts}</div>";
-                                     ?>
-      
+                                    <div class='huge'><?php echo  $user_counts =  recordCount('users'); ?></div>
                                         <div> Users</div>
                                     </div>
                                 </div>
@@ -124,13 +106,7 @@
                                         <i class="fa fa-list fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <?php 
-                                        $query = "SELECT * FROM categories";
-                                        $select_all_categories = mysqli_query($connection, $query);
-                                        $category_counts = mysqli_num_rows($select_all_categories);
-
-                                        echo "<div class='huge'>{$category_counts}</div>";
-                                     ?>                              
+                                     <div class='huge'><?php echo  $category_counts =  recordCount('categories'); ?></div>                             
                                     <div>Categories</div>
                                     </div>
                                 </div>
@@ -146,29 +122,28 @@
                     </div>
                 </div>
                 <!-- /.row -->
-<?php 
-    $query = "SELECT * FROM posts WHERE post_status = 'Published'";
-    $select_all_published_post = mysqli_query($connection, $query);
-    $post_published_count = mysqli_num_rows($select_all_published_post);
 
-    $query = "SELECT * FROM posts WHERE post_status = 'Draft'";
-    $select_all_draft_post = mysqli_query($connection, $query);
-    $post_draft_count = mysqli_num_rows($select_all_draft_post);
+                <?php 
 
+                    // ---------------------------------------------------------------------------------//
+                    //  Checking post status, comment status and user status using checkStatus function //
+                    // ---------------------------------------------------------------------------------//
+                    
+                    // Extracting published post
+                    $post_published_count = checkStatus('posts', 'post_status', 'Published');
 
-    $query = "SELECT * FROM comments WHERE comment_status = 'Unapproved'";
-    $unapproved_comment_query = mysqli_query($connection, $query);
-    $unapproved_comment_count = mysqli_num_rows($unapproved_comment_query);
+                    // Extracting Draft post
+                    $post_draft_count = checkStatus('posts', 'post_status', 'Draft');
 
-    $query = "SELECT * FROM users WHERE user_role = 'Subscriber'";
-    $select_all_subscriber = mysqli_query($connection, $query);
-    $subscriber_count = mysqli_num_rows($select_all_subscriber);
+                    // Extracting Unapproved comment
+                    $unapproved_comment_count = checkStatus('comments', 'comment_status', 'Unapproved');
 
+                    // Extracting Subscriber Role
+                    $subscriber_count = checkUserRole('users', 'user_role', 'Subscriber');
 
+                 ?>
 
-
- ?>
-
+                <!--  Bar chart -->
                 <div class="row">
 
                     <script type="text/javascript">
@@ -204,18 +179,11 @@
                     </script>    
 
                     <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
-
                 </div>
-
-
-
-
-
+                <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
         </div>
-
-
         <!-- /#page-wrapper -->
 
 

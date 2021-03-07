@@ -1,64 +1,80 @@
  <?php  include "includes/header.php"; ?>
+ <?php include "admin/functions.php"; ?>
 
 <?php 
-    if(isset($_POST['submit']))
+    if($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        $username = mysqli_real_escape_string($connection, $_POST['username']);
-        $email    = mysqli_real_escape_string($connection, $_POST['email']);
-        $password = mysqli_real_escape_string($connection, $_POST['password']);
+        $username = trim($_POST['username']);
+        $email    = trim($_POST['email']);
+        $password = trim($_POST['password']);
 
-        if(!empty($username) && !empty($email) && !empty($password))
-        {           
-            $username = mysqli_real_escape_string($connection, $username );
-            $email    = mysqli_real_escape_string($connection, $email);
-            $password = mysqli_real_escape_string($connection, $password);
+        $error = [
 
-            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-
-            // $query = "SELECT randSalt FROM users";
-            // $select_randsalt_query = mysqli_query($connection,$query);
-
-            // if(!$select_randsalt_query)
-            // {
-            //     die("Query Failed" . mysqli_error($connection));
-            // }
-
-            // $row  = mysqli_fetch_array($select_randsalt_query);
-            // $salt = $row['randSalt'];
-
-            // //crypting password, will combine this two parameter
-            // $password = crypt($password, $salt);
+            'username' => '',
+            'email' => '',
+            'password' => ''
 
 
-            $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
-            $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber')";
-            $register_user_query = mysqli_query($connection, $query);
 
-            if(!$register_user_query)
-            {
-                die("QUERY FAILED ". mysqli_error($connection) . ' ' . mysqli_errno($connection));
-            }
-            $message  =  "<div class='alert alert-success '>";
-            $message .=  "Your Registration has been submitted";
-            $message .=   "</div>";
 
-        } else {
-            $message  =  "<div class='alert alert-danger '>";
-            $message = "Field Can't be empty";
-            $message .=   "</div>";
+        ];
+
+
+        if(strlen($username) < 4)
+        {
+            $error['username'] = 'Username needs to be longer';
         }
 
-    } else {
-        $message = "";
-    }
- ?>
-    <!-- Navigation -->
-    
-    <?php  include "includes/nav.php"; ?>
-    
+        if(strlen($username) == '')
+        {
+            $error['username'] = 'Username cannot be empty';
+        }
+
+        if(username_exists($username))
+        {
+            $error['username'] = 'Username already exists. Please try again.';
+        }
  
-    <!-- Page Content -->
-    <div class="container">
+        if(strlen($email) == '' || empty($email))
+        {
+            $error['email'] = 'Email cannot be empty';
+        }
+
+        if(email_exists($email))
+        {
+            $error['email'] = 'Email already exists. <a href="index.php">Please login</a>';
+        }
+
+        if($password == '')
+        {
+            $error['password'] = 'Password cannot be empty';
+        }
+
+        // this will check the error msg in the array, if its empty, it will unset the array or clean the array before executing registration process in the if statement below this loop.
+        foreach ($error as $key => $value) {
+            
+            if (empty($value)) {
+
+                unset($error[$key]);
+            }
+        }
+
+        if(empty($error))
+        {
+            register_user($username, $email, $password);
+
+            login_user($username, $password);
+        }
+
+    } 
+ ?>
+<!-- Navigation -->
+
+<?php  include "includes/nav.php"; ?>
+
+
+<!-- Page Content -->
+<div class="container">
     
 <section id="login">
     <div class="container">
@@ -66,23 +82,26 @@
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
                 <h1>Register</h1>
-                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-                            <h6 class="text-center"><?php echo $message; ?></h6>
-   
+                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="on">
+
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" required>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" value="<?php echo isset($username) ? $username : ''; ?>">
+                            <p><?php echo isset($error['username']) ? $error['username'] : ''; ?></p>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" required>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" value="<?php echo isset($email) ? $email : ''; ?>">
+                            <p><?php echo isset($error['email']) ? $error['email'] : ''; ?></p>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="key" class="form-control" placeholder="Password" required>
+                            <input type="password" name="password" id="key" class="form-control" placeholder="Password" >
+                            <p><?php echo isset($error['password']) ? $error['password'] : ''; ?></p>
+
                         </div>
                 
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>

@@ -111,21 +111,31 @@
 
     //find all posts query
 
-     $query = "SELECT * FROM posts ORDER BY post_id DESC"; //select all from table posts 
-     $select_posts = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
+     // $query = "SELECT * FROM posts ORDER BY post_id DESC"; 
+     $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, ";
+     $query .= "posts.post_tag, posts.post_comment_count, posts.post_date, posts.post_view_count, categories.cat_id, categories.cat_title ";
+     $query .= " FROM posts ";
+     $query .= " LEFT JOIN categories ON posts.post_category_id =  categories.cat_id";
+
+
+     $select_posts = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_posts)) 
     { //amek and tukarkan column kepada key, and anak2 column as value dia s
-        $post_id = escape($row['post_id']);
-        $post_user = escape($row['post_user']);
-        $post_title = escape($row['post_title']);
-        $post_category_id = escape($row['post_category_id']);
-        $post_status = escape($row['post_status']);
-        $post_image = escape($row['post_image']);
-        $post_tag = escape($row['post_tag']);
-        $post_comment_count = escape($row['post_comment_count']);
-        $post_date = escape($row['post_date']);
-        $post_view_count = escape($row['post_view_count']);
+        $post_id = $row['post_id'];
+        $post_user = $row['post_user'];
+        $post_title = $row['post_title'];
+        $post_category_id = $row['post_category_id'];
+        $post_status = $row['post_status'];
+        $post_image = $row['post_image'];
+        $post_tag = $row['post_tag'];
+        $post_comment_count = $row['post_comment_count'];
+        $post_date = $row['post_date'];
+        $post_view_count = $row['post_view_count'];
+        $category_id = $row['cat_id'];
+        $category_title = $row['cat_title'];
+
+
 
         echo "<tr>";
         ?>
@@ -143,21 +153,17 @@
 
 
         //THIS ONE WILL RELATE THE POST CATEGORY ID FROM TABLE POST WITH CAT ID IN TABLE CATEGORIES
-         $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
-         $select_categories_id = mysqli_query($connection, $query); 
+         // $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
+         // $select_categories_id = mysqli_query($connection, $query); 
 
-         while ($row = mysqli_fetch_assoc( $select_categories_id )) { 
-         $cat_id = escape($row['cat_id']);
-         $cat_title = escape($row['cat_title']);
+         // while ($row = mysqli_fetch_assoc( $select_categories_id )) { 
+         // $cat_id = escape($row['cat_id']);
+         // $cat_title = escape($row['cat_title']);
 
+         //  echo "<td> {$cat_title} </td>";
 
-
-
-
-
-        echo "<td> {$cat_title} </td>";
-
-        }
+         // }
+        echo "<td> {$category_title} </td>";
 
         echo "<td> $post_status </td>";
         echo "<td><img class='img-responsive' width='100' src='../images/$post_image' alt='images'>  </td>";
@@ -190,13 +196,23 @@
                     <li><a href='../post.php?p_id={$post_id}' title='View Post'> <i class='fa fa-eye'></i> View</a></li>
                     <li class='divider'></li>
                     <li><a  href='posts.php?source=edit_post&p_id={$post_id}' title='Edit Post'><i class='fa fa-pencil'></i> Edit</a></li>
-                    <li class='divider'></li>
-                    <li><a rel='$post_id' href='javascript:void(0)' class='delete_link' title='Delete Post'><i class='fa fa-trash'></i> Delete</a></li>
-                  </ul>
+                    <li class='divider'></li>";
+
+        ?>
+            <form method="post">
+                <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+
+                <?php  
+                echo '<td><input class="btn btn-danger" type="submit" name="delete" value="Delete"></td>';
+                 ?>
+            </form>
+        <?php
+
+        //echo "<li><a rel='$post_id' href='javascript:void(0)' class='delete_link' title='Delete Post'><i class='fa fa-trash'></i> Delete</a></li>"
+        echo " </ul>
                 </div> 
-            </td>";
-    
-        echo "</tr>";
+                  </td>
+                    </tr>";
 
 
 
@@ -210,13 +226,13 @@
 
 <?php 
 
-if (isset($_GET['delete'])) {
+if (isset($_POST['delete'])) {
 
     if(isset($_SESSION['user_role']))
     {
         if($_SESSION['user_role'] == 'Admin')
         {
-            $the_post_id =  escape( $_GET['delete']);
+            $the_post_id =  escape( $_POST['post_id']);
 
 
             $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
