@@ -3,34 +3,8 @@
     //this post global is for making sure, that the bulk options that user pick for the post status could be updated here  
     if(isset($_POST['checkBoxArray']))
     {
-        foreach ($_POST['checkBoxArray'] as $commentValueId) {
-            $bulk_options = escape($_POST['bulk_options']);
-
-            switch ($bulk_options) {
-                case 'Approved':
-                   $query = "UPDATE comments SET comment_status = '{$bulk_options}'  WHERE comment_id = {$commentValueId} ";
-                    
-                    $update_to_approve_status = mysqli_query($connection, $query);
-                     confirmQuery($update_to_approve_status);
-                    break;
-
-                case 'Unapproved':
-                    $query = "UPDATE comments SET comment_status = '{$bulk_options}'  WHERE comment_id = {$commentValueId} ";
-
-                    $update_to_unapprove_status = mysqli_query($connection, $query);
-                     confirmQuery($update_to_unapprove_status);
-                    break;
-
-                case 'Delete':
-
-                    $query = "DELETE FROM comments WHERE comment_id = {$commentValueId} ";
-                    $update_to_delete_status = mysqli_query($connection, $query);
-                    confirmQuery($update_to_delete_status);
-                    break;  
-            }
-        }
+        bulking_option_comment($checBoxArray = $_POST['checkBoxArray'], $bulk_choices = $_POST['bulk_options']);
     }
-
  ?>
 
 
@@ -67,163 +41,39 @@
         </tr>
     </thead>
     <tbody>
-
-    <?php
-
-    //find all posts query
-
-     $query = "SELECT * FROM comments ORDER BY comment_id DESC"; //select all from table posts 
-     $select_comments = mysqli_query($connection, $query);
-
-    while ($row = mysqli_fetch_assoc($select_comments)) 
-    { //amek and tukarkan column kepada key, and anak2 column as value dia s
-        $comment_id = escape($row['comment_id']);
-        $comment_post_id = escape($row['comment_post_id']);
-        $comment_author = escape($row['comment_author']);
-        $comment_content = escape($row['comment_content']);
-        $comment_email = escape($row['comment_email']);
-        $comment_status = escape($row['comment_status']);
-        $comment_date = escape($row['comment_date']);
-
-        echo "<tr>";
-        ?>
-            <td><input class="checkBoxes" type="checkbox"  name="checkBoxArray[]" value="<?php echo $comment_id ?>"></td>
-        <?php
-        echo "<td> $comment_id </td>";
-        echo "<td> $comment_author </td>";
-        echo "<td> $comment_content </td>";
-        echo "<td> $comment_email </td>";
-        echo "<td> $comment_status </td>";
-
-        //THIS ONE WILL RELATE THE POST CATEGORY ID FROM TABLE POST WITH CAT ID IN TABLE CATEGORIES
-        $query = "SELECT * FROM posts WHERE post_id = {$comment_post_id}";
-        $select_post_id_query = mysqli_query($connection, $query);
-
-        while ($row = mysqli_fetch_assoc($select_post_id_query)) {
-            $post_id = escape($row['post_id']);
-            $post_title = escape($row['post_title']);
-
-            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
-        }
-
-        echo "<td> $comment_date </td>";
-
-
-
-       echo "<td>
-                  <div class='dropdown'>
-                  <button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-cogs'></i> Action
-                  <span class='caret'></span></button>
-                      <ul class='dropdown-menu'>
-                        <li><a href='comments.php?approve={$comment_id}' title='Approve Post'> <i class='fa fa-check'></i> Approve</a></li>
-                        <li class='divider'></li>
-                        <li><a href='comments.php?unapprove={$comment_id}' title='Unapprove Post'><i class='fa fa-times'></i> Unapprove</a></li>
-                        <li class='divider'></li>
-                            <li><a rel='$comment_id' href='javascript:void(0)' class='delete_link' title='Delete Comment'><i class='fa fa-trash'></i> Delete</a></li>
-                      </ul>
-                  </div>    
-                </td>";
-     
-        
-        echo "</tr>";
-
-
-
-    }
-    ?> 
-
-
-
-        </tbody>
-    </table>
-    </form>
+        <?php find_all_comment();?> 
+    </tbody>
+</table>
+</form>
 
 
 
 <?php 
-
-    if (isset($_GET['delete'])) {
-        if(isset($_SESSION['user_role']))
-        {
-            if($_SESSION['user_role'] == 'Admin')
-            {
-                $the_comment_id = escape( $_GET['delete']);
-
-
-                $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
-                $deleteQuery = mysqli_query($connection, $query);
-
-                if(!$deleteQuery)
-                {
-                    die('QUERY FAILED' . mysqli_error($connection));
-                }
-
-
-                 header("Location: comments.php");        
-            }
-        }
-
-    }
-
-
+    // ---------------------------------------//
+    //  Function for approving the comment    //
+    // -------- ------------------------------//
     if (isset($_GET['approve'])) {
-        if(isset($_SESSION['user_role']))
-        {
-            if($_SESSION['user_role'] == 'Admin')
-            {
-                $the_comment_id =escape($_GET['approve']);
-
-
-                $query = "UPDATE comments SET comment_status = 'Approved'  WHERE comment_id = {$the_comment_id} ";
-                $approveQuery = mysqli_query($connection, $query);
-
-                if(!$approveQuery)
-                {
-                    die('QUERY FAILED' . mysqli_error($connection));
-                }
-
-
-                 header("Location: comments.php");        
-            }
-        }
-
+        comment_approval($approve = $_GET['approve'], 'Approved', 'comments.php'); 
     }
 
-
+    // ---------------------------------------//
+    //  Function for unapproving the comment  //
+    // -------- ------------------------------//
     if (isset($_GET['unapprove'])) {
-        if(isset($_SESSION['user_role']))
-        {
-            if($_SESSION['user_role'] == 'Admin')
-            {
-                $the_comment_id = escape($_GET['unapprove']);
-
-
-                $query = "UPDATE comments SET comment_status = 'Unapproved'  WHERE comment_id = {$the_comment_id} ";
-                $unapproveQuery = mysqli_query($connection, $query);
-
-                if(!$unapproveQuery)
-                {
-                    die('QUERY FAILED' . mysqli_error($connection));
-                }
-
-
-                 header("Location: comments.php");       
-            }
-        }
-
+        comment_approval($unapprove = $_GET['unapprove'], 'Unapproved', 'comments.php'); 
     }
-
 ?>
 
 <script>
-
+// ----------------------------------------------------------------------//
+//  Function for pop out delete modal after user clicking delete button  //
+// ---------------------------------------------------------------------//
     $(document).ready(function(){
 
         $(".delete_link").on('click', function(){
 
             var id = $(this).attr("rel");
             var delete_url = "comments.php?delete=" + id + " ";
-
 
             $(".modal_delete_link").attr("href", delete_url); 
 

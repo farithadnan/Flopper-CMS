@@ -14,12 +14,12 @@
                     <div class="col-lg-12">
 
                         <h1 class="page-header">
-                            Welcome to Admin
-                            <small>Author</small>
+                            Welcome to <?php echo $_SESSION['user_role']; ?>
+                            <small><?php echo $_SESSION['username']; ?></small>
                         </h1>
                         <div class="col-xs-6">
-                        <?php include("includes/delete_modal.php"); ?>
-                         <?php insert_categories(); ?>
+                            <?php include("includes/delete_modal.php"); ?>
+                            <?php insert_categories(); ?>
 
                             <form method="post" action="categories.php">
                                 <div class="form-group">
@@ -31,10 +31,7 @@
 
                                 </div>
                             </form>
-
                             <?php  editCategories(); ?>
-
-
                         </div>
 
                         <div class="col-xs-6">
@@ -48,34 +45,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-
-<?php findAllCategories(); ?>
-
-<?php deleteCategories(); ?>
-                                   
-
-                                   
+                                    <?php findAllCategories(); ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
-
             </div>
             <!-- /.container-fluid -->
-
         </div>
-
-
-
-
-
-
         <!-- /#page-wrapper -->
-<script>
 
+
+<script>
+// ----------------------------------------------------------------------//
+//  Function for pop out delete modal after user clicking delete button  //
+// ---------------------------------------------------------------------//
     $(document).ready(function(){
 
         $(".delete_link").on('click', function(){

@@ -21,8 +21,8 @@
 
                                             <input value="<?php if(isset($cat_title)){ echo $cat_title; }  ?>" class="form-control" type="text" name="cat_title">
                                     <?php 
-                                             }
-                                                }
+                                            }
+                                        }
 
                                      ?>
 

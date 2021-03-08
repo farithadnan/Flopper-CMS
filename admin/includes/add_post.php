@@ -10,7 +10,7 @@ if (isset($_POST['create_post'])) {
 
 	//user superglobal $_FILES to send data thru post
 	$post_image = $_FILES['image']['name']; // image the name of the file 
-	$post_image_temp = escape($_FILES['image']['tmp_name']); // temporary info of the files, when previewing the name of the file, this also needed to be transfer
+	$post_image_temp = $_FILES['image']['tmp_name']; // temporary info of the files, when previewing the name of the file, this also needed to be transfer
 
 	$post_tags = escape($_POST['post_tags']);
 	$post_content = escape($_POST['post_content']);

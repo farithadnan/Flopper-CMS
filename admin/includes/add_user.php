@@ -2,42 +2,24 @@
 
 if (isset($_POST['create_user'])) {
 
-
 	$user_firstname = escape($_POST['user_firstname']);
 	$user_lastname = escape($_POST['user_lastname']);
 	$user_role = escape($_POST['user_role']);
-
-	//user superglobal $_FILES to send data thru post
-	// $post_image = $_FILES['image']['name']; // image the name of the file 
-	// $post_image_temp = $_FILES['image']['tmp_name']; // temporary info of the files, when previewing the name of the file, this also needed to be transfer
-
 	$username = escape($_POST['username']);
 	$user_email = escape($_POST['user_email']);
 	$user_password = escape($_POST['user_password']);
-	// $post_date = date('d-m-y'); //using default date function, with a format to capture date
-
-
-	// move_uploaded_file($post_image_temp, "../images/$post_image"); //to move file to the desired location in query below it only stored the file name not its location.
 
 	$password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
-
 	$query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) ";
-
 	$query .= "VALUES('{$user_firstname}','{$user_lastname}','${user_role}', '{$username}','{$user_email}','{$password}')"; //stored the latest date using now() function
-
 	$create_user_query = mysqli_query($connection, $query);
 
 	 confirmQuery($create_user_query);
 		 echo "<div class='alert alert-success '>";
 		 echo "User Created Successful " . " " . "(<a href='users.php'>View User Detail</a>)";
 		 echo "</div>";
-
 }
-
-
-
-
- ?>
+?>
 
 <!-- enctype multipart/form-data is require if u want to send file thru post-->
 <form action="" method="post" enctype="multipart/form-data">

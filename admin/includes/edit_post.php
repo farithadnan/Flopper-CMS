@@ -64,7 +64,6 @@
 					$query .= "post_image = '{$post_image}' ";
 					$query .= "WHERE post_id = {$the_post_id}";
 
-
 					$update_post = mysqli_query($connection, $query);
 					confirmQuery($update_post);
 					echo "<div class='alert alert-success '>";

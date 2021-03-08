@@ -18,43 +18,36 @@
 
                    $row_cat = mysqli_fetch_assoc($choose_cat);
                    $current_cat = $row_cat['cat_title'];
-                 ?>
 
+                    if(isset($_GET['category'])){
+                        $post_category_id = mysqli_escape_string($connection, trim($_GET['category'])); 
+                    
+                    if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin' ) {
+                        $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id";
+                    }
+                    else {
 
-                <?php 
+                        $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id AND post_status = 'Published' ";
 
-                if(isset($_GET['category'])){
-                    $post_category_id = mysqli_escape_string($connection, trim($_GET['category'])); 
-                
-                if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin' ) {
-                    $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id";
-                }
-                else {
+                    }
+                    
+                    $select_all_posts_query = mysqli_query($connection, $query);
 
-                    $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id AND post_status = 'Published' ";
+                    if (mysqli_num_rows( $select_all_posts_query) <1 ) {
+                        echo "<h1 class='text-center'>No posts available for {$current_cat}</h1>";
+                    }
+                    else {
 
-                }
-                
-                $select_all_posts_query = mysqli_query($connection, $query);
+                    while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
+                        $post_id = $row['post_id'];
+                        $post_category_id = $row['post_category_id'];
+                        $post_title = $row['post_title'];
+                        $post_author = $row['post_user'];
+                        $post_date = $row['post_date'];
+                        $post_image = $row['post_image'];
+                        $post_content =  substr($row['post_content'],0,100);
 
-                if (mysqli_num_rows( $select_all_posts_query) <1 ) {
-                    echo "<h1 class='text-center'>No posts available for {$current_cat}</h1>";
-                }
-                else {
-
-                while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
-                    $post_id = $row['post_id'];
-                    $post_category_id = $row['post_category_id'];
-                    $post_title = $row['post_title'];
-                    $post_author = $row['post_user'];
-                    $post_date = $row['post_date'];
-                    $post_image = $row['post_image'];
-                    $post_content =  substr($row['post_content'],0,100);
-
-                    ?>
-
-
-
+                ?>
 
                 <!-- First Blog Post -->
                 <h2>
