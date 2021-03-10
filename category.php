@@ -3,6 +3,7 @@
 
     <!-- Navigation -->
 <?php include("includes/nav.php"); ?>
+<?php include("admin/functions.php") ?>
 
     <!-- Page Content --> 
     <div class="container">
@@ -12,53 +13,60 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <?php 
-                   $category_id = mysqli_escape_string($connection, trim($_GET['category']));
-                   $query_cat = "SELECT * FROM categories  WHERE cat_id = {$category_id}";
-                   $choose_cat = mysqli_query($connection, $query_cat);
-
-                   $row_cat = mysqli_fetch_assoc($choose_cat);
-                   $current_cat = $row_cat['cat_title'];
 
                     if(isset($_GET['category'])){
-                        $post_category_id = mysqli_escape_string($connection, trim($_GET['category'])); 
+                        $post_category_id = $_GET['category']; 
                     
-                    if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin' ) {
-                        $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id";
-                    }
-                    else {
+                        if (is_admin($_SESSION['username'])) {
 
-                        $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id AND post_status = 'Published' ";
+                            $stmt2 = mysqli_prepare($connection, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? ");
 
-                    }
+                            if(isset($stmt2))
+                            {
+                                mysqli_stmt_bind_param($stmt2, "i", $post_category_id);
+                                mysqli_stmt_execute($stmt2);
+                                mysqli_stmt_bind_result($stmt2, $post_id, $post_title, $post_user, $post_date, $post_image, $post_content);
+
+                                $stmt = $stmt2;
+
+                                if (mysqli_stmt_num_rows($stmt) === 0 ) {
+                                    echo "<h1 class='text-center'>No posts available for </h1>";
+                                }
+                            } 
+                        }
+                        else {
+
+                            $stmt3 = mysqli_prepare($connection, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? AND post_status = ? ");
+
+                            $published = 'Published';
+
+                            if(isset($stmt3)){
+                                mysqli_stmt_bind_param($stmt3, "is", $post_category_id,  $published );
+                                mysqli_stmt_execute($stmt3);
+                                mysqli_stmt_bind_result($stmt3, $post_id, $post_title, $post_user, $post_date, $post_image, $post_content);
+
+                                $stmt = $stmt3;
+
+                                if (mysqli_stmt_num_rows($stmt) < 1 ) {
+                                    echo "<h1 class='text-center'>No posts available</h1>";
+                                }
+                            }
+
+                        }
                     
-                    $select_all_posts_query = mysqli_query($connection, $query);
-
-                    if (mysqli_num_rows( $select_all_posts_query) <1 ) {
-                        echo "<h1 class='text-center'>No posts available for {$current_cat}</h1>";
-                    }
-                    else {
-
-                    while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
-                        $post_id = $row['post_id'];
-                        $post_category_id = $row['post_category_id'];
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_user'];
-                        $post_date = $row['post_date'];
-                        $post_image = $row['post_image'];
-                        $post_content =  substr($row['post_content'],0,100);
-
+                        while (mysqli_stmt_fetch($stmt)) :
                 ?>
 
                 <!-- First Blog Post -->
                 <h2>
-                    <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
+                    <a href="/project/cms/post/<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="#"><?php echo $post_author ?></a>
+                    by <a href="#"><?php echo $post_user ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted <?php echo $post_date ?></p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image ?>" alt=""> <!-- it get data (img link) from db, it has been entered manually by me -->
+                <img class="img-responsive" src="/project/cms/images/<?php echo $post_image ?>" alt=""> <!-- it get data (img link) from db, it has been entered manually by me -->
                 <hr>
                 <p><?php echo $post_content ?>.</p>
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -67,9 +75,9 @@
 
 
 
-              <?php  } } } else {
+              <?php  endwhile; mysqli_stmt_close($stmt); } else {
 
-                header("Location: index.php");
+                redirect("/project/cms/index");
 
 
 

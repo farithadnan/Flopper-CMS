@@ -9,13 +9,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">CMS Admin</a>
+            <a class="navbar-brand" href="/project/cms/admin/index">CMS Admin</a>
         </div>
 
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
             <li><a href="">Users Online: <span class="usersonline"></span></a></li>
-            <li><a href="../index.php">Home Site</a></li>
+            <li><a href="../index">Home Site</a></li>
 
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
@@ -29,7 +29,7 @@
                     <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        <a href="/project/cms/admin/profile"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -95,13 +95,13 @@
 
             <ul class="nav navbar-nav side-nav">
                 <li class="<?php echo $dashboard_class; ?>">
-                    <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    <a href="/project/cms/admin/index"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                 </li>
                 <li class="<?php echo $post_class; ?>">
                     <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="posts_dropdown" class="collapse">
                         <li>
-                            <a href="posts.php">View All Posts</a>
+                            <a href="/project/cms/admin/posts">View All Posts</a>
                         </li>
                         <li>
                             <a href="posts.php?source=add_post">Add Posts</a>
@@ -109,17 +109,17 @@
                     </ul>
                 </li>
                 <li class="<?php echo $category_class; ?>">
-                    <a href="categories.php"><i class="fa fa-fw fa-wrench"></i>Categories</a>
+                    <a href="/project/cms/admin/categories"><i class="fa fa-fw fa-wrench"></i>Categories</a>
                 </li>
               
                 <li class="<?php echo $comment_class; ?>">
-                    <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
+                    <a href="/project/cms/admin/comments"><i class="fa fa-fw fa-file"></i> Comments</a>
                 </li>
                  <li class="<?php echo $user_class; ?>">
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
                         <li>
-                            <a href="users.php">View All Users</a>
+                            <a href="/project/cms/admin/users">View All Users</a>
                         </li>
                         <li>
                             <a href="users.php?source=add_user">Add User</a>
@@ -127,7 +127,7 @@
                     </ul>
                 </li>
                 <li class="<?php echo $profile_class; ?>">
-                    <a href="profile.php"><i class="fa fa-fw fa-dashboard"></i>Profile</a>
+                    <a href="/project/cms/admin/profile"><i class="fa fa-fw fa-dashboard"></i>Profile</a>
                 </li>
 
             </ul>

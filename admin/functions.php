@@ -144,11 +144,12 @@ function insert_categories() {
 
 	    } else
 	    	{
-	        $query = "INSERT INTO categories(cat_title)";
-	        $query .="VALUE('{$cat_title}')";
-	        $create_category = mysqli_query($connection, $query);
+	        $stmt = mysqli_prepare($connection,"INSERT INTO categories(cat_title) VALUES(?) ");
+	        mysqli_stmt_bind_param($stmt, 's', $cat_title);
+	        mysqli_stmt_execute($stmt);
+	        confirmQuery($stmt);
 
-	        confirmQuery($create_category);
+	        mysqli_stmt_close($stmt);
 	    	}
 	}
 
@@ -225,6 +226,8 @@ function editCategories() {
 //  This function is used to check if the user role is admin or not //
 // -----------------------------------------------------------------//
 function is_admin($username){
+	
+	error_reporting(0);
 
 	global $connection;
 
@@ -233,14 +236,16 @@ function is_admin($username){
 	confirmQuery($result);
 
 	$row = mysqli_fetch_array($result);
+	$user_role = $row['user_role'];
 
-	if($row['user_role'] == 'Admin')
+	if($user_role === 'Admin')
 	{
-		return true;
+		return True;
 
-	} else {
-
-		return false;
+	} 
+	else
+	{
+		return False;
 	}
 }
 

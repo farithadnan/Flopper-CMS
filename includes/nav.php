@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">CMS Front</a>
+                <a class="navbar-brand" href="/project/cms/index">CMS Front</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,8 +50,35 @@
                             {
                                 $contact_class = 'active';
                             }
- 
-                            echo "<li class='$category_class'><a  href='category.php?category={$cat_id}'>{$cat_title}</a></li>";                            
+                            
+                            if($_SESSION['user_role'] != 'Admin')
+                            {
+                                $post_query = "SELECT * FROM posts WHERE post_category_id = {$cat_id}";
+                                $select_id = mysqli_query($connection, $post_query);
+                           
+
+                                while($row2 = mysqli_fetch_assoc($select_id))
+                                {
+                                    $post_category_id = $row2['post_category_id'];
+                                    $post_status = $row2['post_status'];
+
+                                    if($cat_id == $post_category_id && $post_status == 'Published')
+                                    {
+                                        echo "<li class='$category_class'><a  href='/project/cms/category/{$cat_id}'>{$cat_title}</a></li>"; 
+                                    }
+                                    else
+                                    {
+                                        echo "<li class='text-center'> <small> No Data </small></li>";
+                                    }
+                                    
+                                }
+                                
+                            }
+                            else
+                            {
+                                echo "<li class='$category_class'><a  href='/project/cms/category/{$cat_id}'>{$cat_title}</a></li>"; 
+                            }
+                                                       
                             
                         }                   
                      ?>
@@ -60,15 +87,15 @@
                     
                     <?php if (isset($_SESSION['user_role'])) : ?>
                     <li>
-                        <a href="admin">Admin</a> 
+                        <a href="/project/cms/admin/index">Admin</a> 
                     </li>
                     <?php endif; ?>
 
                     <li class="<?php echo $registration_class; ?>">
-                        <a href="registration.php">Registration</a> 
+                        <a href="/project/cms/registration">Registration</a> 
                     </li>
                     <li  class="<?php echo $contact_class; ?>">
-                        <a href="contact.php">Contact</a> 
+                        <a href="/project/cms/contact">Contact</a> 
                     </li>
 
                     <?php 
@@ -77,7 +104,7 @@
                         if(isset($_GET['p_id']))
                         {
                             $the_post_id = $_GET['p_id'];
-                            echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+                            echo "<li><a href='/project/cms/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
                         }
                      }
                     ?>

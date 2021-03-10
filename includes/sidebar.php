@@ -62,7 +62,33 @@
                                 while ($row = mysqli_fetch_assoc($select_all_categories_sidebar)) { //amek and tukarkan column kepada key, and anak2 column as value dia s
                                     $cat_title = $row['cat_title'];
                                     $cat_id = $row['cat_id'];
-                                    echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
+
+
+                                    if($_SESSION['user_role'] != 'Admin')
+                                    {
+                                        $post_query = "SELECT * FROM posts WHERE post_category_id = {$cat_id}";
+                                        $select_id = mysqli_query($connection, $post_query);
+                                   
+
+                                        while($row2 = mysqli_fetch_assoc($select_id))
+                                        {
+                                            $post_category_id = $row2['post_category_id'];
+                                            $post_status = $row2['post_status'];
+
+                                            if($cat_id == $post_category_id && $post_status == 'Published')
+                                            {
+                                                echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>";
+                                            }
+                                            else
+                                            {
+                                                echo "<li class='text-center'> <p> No Data Available </p></li>";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>";
+                                    }
                                 }
                             ?>
                             </ul>
