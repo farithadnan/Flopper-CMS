@@ -6,6 +6,41 @@
 function redirect($location)
 {
 	return header("Location:" . $location);
+	exit;
+}
+
+// -----------------------------------//
+//  Function that wil check a method  //
+// -----------------------------------//
+function ifItIsMethod($method=null){
+	if($_SERVER['REQUEST_METHOD'] == strtoupper($method))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+// -----------------------------------------------------//
+//  Function that wil check if a user logged in or not  //
+// -----------------------------------------------------//
+function isLoggedIn(){
+
+	if(isset($_SESSION['user_role'])){
+		return true;
+	}
+
+	return false;
+}
+
+// ------------------------------------------------------------------------//
+//  Function that wil check if a user logged in and redirect it if its yes //
+// ------------------------------------------------------------------------//
+function checkIfUserIsLoggedInAndRedirect($redirectLocation=null){
+	if (isLoggedIn()){
+
+		redirect($redirectLocation);
+	}
 }
 
 // ----------------------------------------------------------//
@@ -333,11 +368,8 @@ function login_user($username, $password){
 	$query = "SELECT * FROM users WHERE username = '{$username}'";
 	$select_user_query = mysqli_query($connection, $query);
 
-	if(!$select_user_query)
-	{
-		die("QUERY FAILED" . mysqli_error($connection));
-	}
-
+	confirmQuery($select_user_query);
+	
 	//fetch assoc; associative array array with define name, and assined value to this name
 	//fetch array: numeric array without defined name only define my number like 0,1,2 to store an assign value
 	while ($row = mysqli_fetch_array($select_user_query)) 
@@ -349,23 +381,23 @@ function login_user($username, $password){
 		$db_user_lastname = $row['user_lastname'];
 		$db_user_role = $row['user_role'];
 
+
+		if(password_verify($password, $db_user_password))
+		{
+			$_SESSION['username'] = $db_username;
+			$_SESSION['firstname'] = $db_user_firstname;
+			$_SESSION['lastname'] = $db_user_lastname;
+			$_SESSION['user_role'] = $db_user_role;
+
+			redirect("/project/cms/admin/index");
+
+		} else {
+
+			return false;
+		}
 	}
 
-	// $password = crypt($password, $db_user_password );
-
-	if(password_verify($password, $db_user_password))
-	{
-		$_SESSION['username'] = $db_username;
-		$_SESSION['firstname'] = $db_user_firstname;
-		$_SESSION['lastname'] = $db_user_lastname;
-		$_SESSION['user_role'] = $db_user_role;
-
-		redirect("../admin/index.php");
-
-	} else {
-
-		redirect("/index.php");
-	}
+	return true;
 }
 
 // -------------------------------------//

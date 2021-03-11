@@ -3,7 +3,6 @@
 
     <!-- Navigation -->
 <?php include("includes/nav.php"); ?>
-<?php include("admin/functions.php") ?>
 
     <!-- Page Content --> 
     <div class="container">

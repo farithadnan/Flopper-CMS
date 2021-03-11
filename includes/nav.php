@@ -85,9 +85,16 @@
                      </ul>
                     </li>
                     
-                    <?php if (isset($_SESSION['user_role'])) : ?>
+                    <?php if(isLoggedIn()) :?>
                     <li>
                         <a href="/project/cms/admin/index">Admin</a> 
+                    </li>
+                    <li>
+                        <a href="/project/cms/includes/logout.php">Logout</a> 
+                    </li>
+                    <?php else: ?>
+                    <li>
+                        <a href="/project/cms/login">Login</a> 
                     </li>
                     <?php endif; ?>
 

@@ -22,9 +22,8 @@
                 $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id =  $the_post_id ";
                 $send_query = mysqli_query($connection, $view_query);
 
-                if(!$send_query){
-                    die("Query Failed");
-                }
+                confirmQuery($send_query);
+                
 
                 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin' ) {
                     $query = "SELECT * FROM posts WHERE post_id = $the_post_id";

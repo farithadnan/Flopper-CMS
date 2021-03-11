@@ -1,8 +1,8 @@
      <!-- Footer -->
         <footer>
             <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Farith Syariffudin. All Right Reserved <label id="copyright" style="font-weight:normal;"></label></p>
+                <div class="col-lg-12"> 
+                    <p>Copyright &copy; CMS by Farith Syariffudin. All Right Reserved <label id="copyright" style="font-weight:normal;"></label></p>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

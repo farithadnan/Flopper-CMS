@@ -1,0 +1,12 @@
+{
+    "name": "ayied/cms",
+    "require": {
+        "phpmailer/phpmailer": "^6.3"
+    },
+    "authors": [
+        {
+            "name": "Farith Syariffudin",
+            "email": "22324133+ayiedfarith@users.noreply.github.com"
+        }
+    ]
+}
