@@ -6,7 +6,7 @@
     use PHPMailer\PHPMailer\Exception;
 
     require './vendor/autoload.php';
-    require './classes/Config.php';
+     // require './classes/Config.php';
 
 
     if(!ifItIsMethod('get') && !isset($_GET['forgot']))
@@ -47,7 +47,8 @@
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
                         $mail->Port       = Config::SMTP_PORT;   
                         $mail->SMTPAuth   = true;   
-                        $mail->isHTML(true);                                     
+                        $mail->isHTML(true);   
+                        $mail->CharSet = 'UTF-8';                                  
                      
                         //Recipients
                         $mail->setFrom('ayiedfarith@gmail.com', 'Ayied Farith');
@@ -62,7 +63,7 @@
                         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                     }
 
-                } 
+                }
 
             }
         }
