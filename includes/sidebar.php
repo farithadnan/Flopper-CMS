@@ -1,14 +1,18 @@
 <?php 
 
     if(ifItIsMethod('post')){
-        if(isset($_POST['username']) && isset($_POST['password']))
+        if(isset($_POST['login']))
         {
-            login_user($_POST['username'], $_POST['password']);
+            if(isset($_POST['username']) && isset($_POST['password']))
+            {
+                login_user($_POST['username'], $_POST['password']);
 
-        } else{
+            } else{
 
-            redirect('/cms/index');
+                redirect('index');
+            } 
         }
+
     }
 ?>
 <div class="col-md-4">
