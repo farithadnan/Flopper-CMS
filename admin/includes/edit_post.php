@@ -1,11 +1,11 @@
+
+
 <?php 
-
-
 	if (isset($_GET['p_id'])) {
 		if(isset($_SESSION['user_role']))
 		{
-		    if($_SESSION['user_role'] == 'Admin')
-		    {
+		    // if($_SESSION['user_role'] == 'Admin')
+		    // {
 				$the_post_id = escape( $_GET['p_id']); 	
 
 				//query to preview the choosen post info based on id
@@ -70,12 +70,23 @@
 					echo "Your post has been succesfully updated. " . " " . "(<a href='../post.php?p_id={$the_post_id}'>View Post</a> | <a href='posts.php'>Edit More Post</a> )";
 					echo "</div>";
 				}
-		    }
+		    // }
 		}
 	}
 ?>
 
+<?php 
+	
+	if(isset($_GET['p_id']))
+	{
+		$filter_user = filterEditPost($p_id = $_GET['p_id'] );
+		$user = currentUser();
+		$role = currentRole();
 
+		if($filter_user == $user || $role === 'Admin')
+		{
+
+ ?>
 
 <!-- enctype multipart/form-data is require if u want to send file thru post-->
 <form action="" method="post" enctype="multipart/form-data">
@@ -146,13 +157,13 @@
 		<select class="form-control" name="post_status" id="post_status">
 		<option value="<?php echo $post_status ?>"><?php  echo $post_status; ?></option>
 		<?php 
-			if($post_status == 'Published')
+			if($post_status === 'Published')
 			{
-				echo "<option selected value='Draft'>Draft</option>";
+				echo "<option  value='Draft'>Draft</option>";
 			}
 			else
 			{
-				echo "<option selected value='Published'>Published</option>";
+				echo "<option value='Published'>Published</option>";
 			}
 		 ?>
 		</select>
@@ -181,3 +192,11 @@
 	</div>
 
 </form>
+
+<?php		
+		} 
+		else {
+			redirect("posts");
+		}
+	} 
+?>

@@ -1,5 +1,32 @@
-<?php 
 
+<?php 
+// ------------------------------------------------------------//
+//  Function that wil filter post id then return the post user //
+// ------------------------------------------------------------//
+function filterEditPost($the_post_id)
+{
+	global $connection;
+
+	$query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
+	$select_author = mysqli_query($connection, $query);
+	confirmQuery($select_author);
+
+	$row = mysqli_fetch_assoc($select_author);
+	$post_author_filter = $row['post_user'];
+
+	return $post_author_filter;
+
+}
+// --------------------------------------------------------------------------------------------//
+//  Function that wil post default picture if the post doesnt have any image assigned to it    //
+// -------------------------------------------------------------------------------------------//
+function imagePlaceholder($image=''){
+	if(!$image){
+		return 'no-image.jpg';
+	}else{
+		return $image;
+	}
+}
 // ----------------------------------------------------------//
 //  Function that wil redirect user to a specified path      //
 // ----------------------------------------------------------//
@@ -8,6 +35,29 @@ function redirect($location)
 	return header("Location:" . $location);
 	exit;
 }
+// ----------------------------------------------------------//
+//  Function that wil return current user that logged in     //
+// ----------------------------------------------------------//
+function currentUser()
+{
+	if(isset($_SESSION['username'])){
+		return $_SESSION['username'];
+	}
+
+	return false;
+}
+// ---------------------------------------------------------------//
+//  Function that wil return current user role that logged in     //
+// ---------------------------------------------------------------//
+function currentRole()
+{
+	if(isset($_SESSION['user_role'])){
+		return $_SESSION['user_role'];
+	}
+
+	return false;
+}
+
 
 // -----------------------------------//
 //  Function that wil check a method  //
@@ -475,12 +525,16 @@ function view_all_post()
 	global $connection;
     //find all posts query
 
-    // $query = "SELECT * FROM posts ORDER BY post_id DESC"; 
     $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, ";
     $query .= "posts.post_tag, posts.post_comment_count, posts.post_date, posts.post_view_count, categories.cat_id, categories.cat_title ";
     $query .= " FROM posts ";
     $query .= " LEFT JOIN categories ON posts.post_category_id =  categories.cat_id";
-
+    
+    if(currentRole() == 'Subscriber')
+	{
+		$user = currentUser();
+	    $query .= " WHERE post_user = '$user'";
+	}
 
      $select_posts = mysqli_query($connection, $query);
 
@@ -631,59 +685,68 @@ function bulking_option_comment($checBoxArray, $bulk_choices)
 function find_all_comment()
 {
 	global $connection;
-    //find all comment query
+	$user = currentUser();
 
-     $query = "SELECT * FROM comments ORDER BY comment_id DESC"; //select all from table posts 
-     $select_comments = mysqli_query($connection, $query);
+	$query_post = "SELECT post_id, post_user FROM posts WHERE post_user = '{$user}'";
+	$select_user_post = mysqli_query($connection, $query_post);
+	while($row_post = mysqli_fetch_assoc($select_user_post))
+	{
+		$post_id = $row_post['post_id'];
+		$post_user = $row_post['post_user'];
 
-    while ($row = mysqli_fetch_assoc($select_comments)) 
-    { //amek and tukarkan column kepada key, and anak2 column as value dia s
-        $comment_id = escape($row['comment_id']);
-        $comment_post_id = escape($row['comment_post_id']);
-        $comment_author = escape($row['comment_author']);
-        $comment_content = escape($row['comment_content']);
-        $comment_email = escape($row['comment_email']);
-        $comment_status = escape($row['comment_status']);
-        $comment_date = escape($row['comment_date']);
+	    //find all comment query
+	     $query = "SELECT * FROM comments WHERE comment_post_id = {$post_id} ORDER BY comment_id DESC "; //select all from table posts 
+	     $select_comments = mysqli_query($connection, $query);
 
-        echo "<tr>";
-        ?>
-            <td><input class="checkBoxes" type="checkbox"  name="checkBoxArray[]" value="<?php echo $comment_id ?>"></td>
-        <?php
-        echo "<td> $comment_id </td>";
-        echo "<td> $comment_author </td>";
-        echo "<td> $comment_content </td>";
-        echo "<td> $comment_email </td>";
-        echo "<td> $comment_status </td>";
+	    while ($row = mysqli_fetch_assoc($select_comments)) 
+	    { //amek and tukarkan column kepada key, and anak2 column as value dia s
+	        $comment_id = escape($row['comment_id']);
+	        $comment_post_id = escape($row['comment_post_id']);
+	        $comment_author = escape($row['comment_author']);
+	        $comment_content = escape($row['comment_content']);
+	        $comment_email = escape($row['comment_email']);
+	        $comment_status = escape($row['comment_status']);
+	        $comment_date = escape($row['comment_date']);
 
-        //THIS ONE WILL RELATE THE POST CATEGORY ID FROM TABLE POST WITH CAT ID IN TABLE CATEGORIES
-        $query = "SELECT * FROM posts WHERE post_id = {$comment_post_id}";
-        $select_post_id_query = mysqli_query($connection, $query);
+	        echo "<tr>";
+	        ?>
+	            <td><input class="checkBoxes" type="checkbox"  name="checkBoxArray[]" value="<?php echo $comment_id ?>"></td>
+	        <?php
+	        echo "<td> $comment_id </td>";
+	        echo "<td> $comment_author </td>";
+	        echo "<td> $comment_content </td>";
+	        echo "<td> $comment_email </td>";
+	        echo "<td> $comment_status </td>";
 
-        while ($row = mysqli_fetch_assoc($select_post_id_query)) {
-            $post_id = escape($row['post_id']);
-            $post_title = escape($row['post_title']);
+	        //THIS ONE WILL RELATE THE POST CATEGORY ID FROM TABLE POST WITH CAT ID IN TABLE CATEGORIES
+	        $query = "SELECT * FROM posts WHERE post_id = {$comment_post_id}";
+	        $select_post_id_query = mysqli_query($connection, $query);
 
-            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
-        }
+	        while ($row = mysqli_fetch_assoc($select_post_id_query)) {
+	            $post_id = escape($row['post_id']);
+	            $post_title = escape($row['post_title']);
 
-        echo "<td> <i class='fa fa-calendar'></i> $comment_date </td>";
-        echo "<td> <a class='btn btn-success' href='comments.php?approve={$comment_id}' title='Approve Post'> <i class='fa fa-check'></i> Approve</a></td>";
-        echo "<td> <a class='btn btn-info' href='comments.php?unapprove={$comment_id}' title='Unapprove Post'><i class='fa fa-times'></i> Unapprove</a></td>";
-    ?>
-        <form method="post">
-            <input type="hidden" name="comment_id" value="<?php echo $comment_id; ?>">
-            <?php echo '<td><input class="btn btn-danger" type="submit" name="delete" value="Delete"></td>'; ?>
-        </form>
-    <?php
-       echo "</tr>";
+	            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
+	        }
 
-        // ---------------------------------------------------------//
-        //  This function is used in deleting the existing comment  //
-        // ---------------------------------------------------------//
-        if (isset($_POST['delete'])) {
-            delete_option($comment_id = $_POST['comment_id'], 'comments', 'comment_id', 'comments.php');
-        }
+	        echo "<td> <i class='fa fa-calendar'></i> $comment_date </td>";
+	        echo "<td> <a class='btn btn-success' href='comments.php?approve={$comment_id}' title='Approve Post'> <i class='fa fa-check'></i> Approve</a></td>";
+	        echo "<td> <a class='btn btn-info' href='comments.php?unapprove={$comment_id}' title='Unapprove Post'><i class='fa fa-times'></i> Unapprove</a></td>";
+	    ?>
+	        <form method="post">
+	            <input type="hidden" name="comment_id" value="<?php echo $comment_id; ?>">
+	            <?php echo '<td><input class="btn btn-danger" type="submit" name="delete" value="Delete"></td>'; ?>
+	        </form>
+	    <?php
+	       echo "</tr>";
+
+	        // ---------------------------------------------------------//
+	        //  This function is used in deleting the existing comment  //
+	        // ---------------------------------------------------------//
+	        if (isset($_POST['delete'])) {
+	            delete_option($comment_id = $_POST['comment_id'], 'comments', 'comment_id', 'comments.php');
+	        }
+	    }
     }
 }
 

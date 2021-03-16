@@ -87,7 +87,7 @@
                     
                     <?php if(isLoggedIn()) :?>
                     <li>
-                        <a href="/project/cms/admin/index">Admin</a> 
+                        <a href="/project/cms/admin/index"><?php echo currentRole(); ?></a> 
                     </li>
                     <li>
                         <a href="/project/cms/includes/logout.php">Logout</a> 
@@ -106,14 +106,30 @@
                     </li>
 
                     <?php 
-                     if (isset($_SESSION['user_role'])) {
-                        
-                        if(isset($_GET['p_id']))
-                        {
-                            $the_post_id = $_GET['p_id'];
-                            echo "<li><a href='/project/cms/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
-                        }
-                     }
+                    $pageName =  basename($_SERVER['PHP_SELF']);
+                    $post = "post.php";
+                    
+                    if($pageName == $post )
+                    {
+                        $the_post_id = $_GET['p_id'];
+                        $user = currentUser();
+
+                        $query = "SELECT * FROM posts WHERE post_id = {$the_post_id} ";
+                        $select_post = mysqli_query($connection, $query);
+                        confirmQuery($select_post);
+
+                        $row = mysqli_fetch_assoc($select_post);
+                        $post_user = $row['post_user'];
+
+                         if (isset($_SESSION['user_role']) && $post_user === $user) {
+                            
+                            if(isset($the_post_id))
+                            {
+                                echo "<li><a href='/project/cms/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+                            }
+                         } 
+                    }
+
                     ?>
                 </ul>
             </div>

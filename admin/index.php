@@ -3,8 +3,6 @@
 
     <div id="wrapper">
 
-
-
  <!-- Navigation -->
 <?php include("includes/admin_navigation.php"); ?>
 
@@ -18,9 +16,9 @@
                     <div class="col-lg-12">
 
                         <h1 class="page-header">
-                            Welcome to Admin
+                            Welcome to <?php echo $_SESSION['user_role']; ?>
                             <small>
-                                <?php echo $_SESSION['username'] ?>
+                                <?php echo $_SESSION['username']; ?>
                             </small>
                         </h1>
                     </div>
@@ -89,6 +87,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if (is_admin($_SESSION['username'])) : ?>
                             <a href="users.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
@@ -96,6 +95,8 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
+                            <?php else: ?>
+                            <?php endIf; ?>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -111,6 +112,7 @@
                                     </div>
                                 </div>
                             </div>
+                             <?php if (is_admin($_SESSION['username'])) : ?>
                             <a href="categories.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
@@ -118,13 +120,15 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
+                            <?php else: ?>
+                            <?php endIf; ?>
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
-
+                <?php if (is_admin($_SESSION['username'])) : ?>
                 <?php 
-
+         
                     // ---------------------------------------------------------------------------------//
                     //  Checking post status, comment status and user status using checkStatus function //
                     // ---------------------------------------------------------------------------------//
@@ -155,12 +159,14 @@
                           ['Data', 'Count'],
 
                           <?php 
+
                             $element_text = ['All Posts','Active Posts', 'Draft Posts','Categories', 'Users', 'Subsribers', 'Comments', 'Pending Comments'];
                             $element_count = [$post_count, $post_published_count, $post_draft_count, $category_counts, $user_counts,  $subscriber_count, $comment_counts, $unapproved_comment_count];
 
                             for($i = 0; $i < 8; $i++){
                                 echo "['{$element_text[$i]}'" . " ," . "{$element_count[$i]}],";
                             }
+
                            ?>
 
                         ]);
@@ -181,6 +187,7 @@
                     <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
                 </div>
                 <!-- /.row -->
+                <?php endIf; ?>
             </div>
             <!-- /.container-fluid -->
         </div>

@@ -7,20 +7,12 @@
 		redirect('index');
 	}
 
-	
-	// $email = 'ricosuave@gmail.com';
-	// $token = 'e3e41803472fb044faf145ab6cf6be34debd131f15e7bec59ac594af0aafe932ac3851a6eda42e7f669453f224612067fed1';
 	if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token=? ')){
 		mysqli_stmt_bind_param($stmt, "s", $_GET['token']);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_bind_result($stmt, $username, $user_email, $token);
 		mysqli_stmt_fetch($stmt);
 		mysqli_stmt_close($stmt);
-
-		// if($_GET['token'] !== $token || $_GET['email'] !== $email)
-		// {
-		// 	redirect('index');
-		// }
 
 
 		if(isset($_POST['password']) && isset($_POST['confirmPassword'])){
@@ -55,7 +47,6 @@
 
 
 <!-- Navigation -->
-
 <?php  include "includes/nav.php"; ?>
 
 <div class="container">

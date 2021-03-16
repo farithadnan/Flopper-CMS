@@ -9,22 +9,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/project/cms/admin/index">CMS Admin</a>
+            <a class="navbar-brand" href="/project/cms/admin/index">CMS <?php echo $_SESSION['user_role'];?></a>
         </div>
 
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
-            <li><a href="">Users Online: <span class="usersonline"></span></a></li>
+            <li><a href="">Users Online:<span class="usersonline"></span></a></li>
             <li><a href="../index">Home Site</a></li>
 
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
 
         <?php 
-            if(isset($_SESSION['username']))
-            {
-                echo $_SESSION['username'];
-            }
+            $user = currentUser();
+            echo $user;
         ?>
                     <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -41,6 +39,7 @@
 
 
         <?php 
+
             $pageName = basename($_SERVER['PHP_SELF']);
 
             $dashboard_class = '';
@@ -108,13 +107,16 @@
                         </li>
                     </ul>
                 </li>
+<?php if (is_admin($_SESSION['username'])) : ?>
                 <li class="<?php echo $category_class; ?>">
                     <a href="/project/cms/admin/categories"><i class="fa fa-fw fa-wrench"></i>Categories</a>
                 </li>
-              
+<?php else: ?>
+<?php endIf; ?>
                 <li class="<?php echo $comment_class; ?>">
                     <a href="/project/cms/admin/comments"><i class="fa fa-fw fa-file"></i> Comments</a>
                 </li>
+ <?php if (is_admin($_SESSION['username'])) : ?>
                  <li class="<?php echo $user_class; ?>">
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
@@ -126,6 +128,8 @@
                         </li>
                     </ul>
                 </li>
+<?php else: ?>
+<?php endIf; ?>
                 <li class="<?php echo $profile_class; ?>">
                     <a href="/project/cms/admin/profile"><i class="fa fa-fw fa-dashboard"></i>Profile</a>
                 </li>

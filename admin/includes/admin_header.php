@@ -5,13 +5,21 @@
 <?php session_start(); ?>
 
 <?php 
-    if(!isset($_SESSION['user_role']))
+    if(!isLoggedIn())
     {
-        header("Location: ../index.php");     
-    }
-    else
-    {
+        redirect("../index");     
 
+    }else{
+        if(!is_admin($_SESSION['username']))
+        {
+            $pagename = basename($_SERVER['PHP_SELF']);
+            $categories = 'categories.php';
+            $user = 'users.php';
+            if($pagename ==  $categories || $pagename ==  $categories )
+            {
+                redirect("index");
+            }
+        }
     }
  ?>
 

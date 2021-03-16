@@ -66,7 +66,7 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted <?php echo $post_date ?></p>
                 <hr>
-            <img class="img-responsive" src="/project/cms/images/<?php echo $post_image ?>" alt=""> <!-- it get data (img link) from db, it has been entered manually by me -->
+            <img class="img-responsive" src="/project/cms/images/<?php echo imagePlaceholder($post_image); ?>" alt=""> <!-- it get data (img link) from db, it has been entered manually by me -->
                 <hr>
                 <p><?php echo $post_content ?></p>
 

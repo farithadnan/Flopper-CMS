@@ -41,7 +41,7 @@
     <div class="well">
         <?php if (isset($_SESSION['user_role'])) : ?>
             <h4>Logged in as: <?php echo $_SESSION['username']; ?></h4>
-            <a href="includes/logout.php" class="btn btn-danger">Logout</a>
+            <a href="/project/cms/includes/logout.php" class="btn btn-danger">Logout</a>
 
         <?php else: ?>
             <h4>Login</h4>
@@ -94,21 +94,20 @@
                                 $post_category_id = $row2['post_category_id'];
                                 $post_status = $row2['post_status'];
 
-                                if($cat_id == $post_category_id && $post_status == 'Published')
+                                if($cat_id == $post_category_id && $post_status =='Published')
                                 {
                                     echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>";
                                 }
-                                else
-                                {
-                                    echo "<li class='text-center'> <p> No Data Available </p></li>";
-                                }
                             }
+
                         }
                         else
                         {
                             echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>";
                         }
                     }
+
+
                 ?>
                 </ul>
             </div>
