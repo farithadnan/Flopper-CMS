@@ -1,6 +1,17 @@
  <?php  include "includes/header.php"; ?>
 
 <?php 
+    require 'vendor/autoload.php';
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
+    $options = array(
+        'cluster' => 'ap1',
+        'encrypted' => true
+    );
+
+    $pusher = new Pusher\Pusher($_ENV['APP_KEY'], $_ENV['APP_SECRET'], $_ENV['APP_ID'], $options );
+
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {
         $username = trim($_POST['username']);
@@ -12,10 +23,6 @@
             'username' => '',
             'email' => '',
             'password' => ''
-
-
-
-
         ];
 
 
@@ -62,6 +69,8 @@
         {
             register_user($username, $email, $password);
 
+            $data['message'] = $username;
+            $pusher->trigger('notifications', 'new_user', $data);
             login_user($username, $password);
         }
 

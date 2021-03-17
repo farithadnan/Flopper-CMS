@@ -1,7 +1,5 @@
 
 
-
-
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -108,7 +106,7 @@
                     <?php 
                     $pageName =  basename($_SERVER['PHP_SELF']);
                     $post = "post.php";
-                    
+
                     if($pageName == $post )
                     {
                         $the_post_id = $_GET['p_id'];

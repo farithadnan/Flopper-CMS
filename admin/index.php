@@ -195,3 +195,40 @@
 
 
 <?php include("includes/admin_footer.php"); ?>
+
+<script>
+    $(document).ready(function(){
+
+        var pusher = new Pusher('8d2c9da29cac74485483', {
+            cluster: 'ap1',
+            encrypted: true
+        });
+
+        var notificationChannel = pusher.subscribe('notifications');
+        notificationChannel.bind('new_user', function(notification){
+        var message = notification.message;
+
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": true,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        toastr["info"](`${message} just registered`, `New User Registration`);
+            
+        });
+
+    });
+</script>

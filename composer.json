@@ -1,7 +1,9 @@
 {
     "name": "ayied/cms",
     "require": {
-        "phpmailer/phpmailer": "^6.3"
+        "phpmailer/phpmailer": "^6.3",
+        "pusher/pusher-php-server": "^6.0",
+        "vlucas/phpdotenv": "^5.3"
     },
 
     "autoload": {

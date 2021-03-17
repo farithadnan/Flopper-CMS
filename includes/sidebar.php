@@ -82,9 +82,10 @@
                         $cat_title = $row['cat_title'];
                         $cat_id = $row['cat_id'];
 
-
-                        if($_SESSION['user_role'] != 'Admin')
+                        
+                        if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'Admin')
                         {
+                            error_reporting(0);
                             $post_query = "SELECT * FROM posts WHERE post_category_id = {$cat_id}";
                             $select_id = mysqli_query($connection, $post_query);
                        
