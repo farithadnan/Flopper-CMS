@@ -22,7 +22,7 @@
 
         <?php 
             $user = currentUser();
-            echo $user;
+            echo ucfirst($user);
         ?>
                     <b class="caret"></b></a>
                 <ul class="dropdown-menu">

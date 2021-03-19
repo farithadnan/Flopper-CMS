@@ -1,32 +1,13 @@
 
 <?php 
-// ------------------------------------------------------------//
-//  Function that wil filter post id then return the post user //
-// ------------------------------------------------------------//
-function filterEditPost($the_post_id)
-{
+// --------------------------------------------------------------//
+//  Function that wil help simplified the usage of mysqli_query  //
+// --------------------------------------------------------------//
+function query($query){
 	global $connection;
-
-	$query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
-	$select_author = mysqli_query($connection, $query);
-	confirmQuery($select_author);
-
-	$row = mysqli_fetch_assoc($select_author);
-	$post_author_filter = $row['post_user'];
-
-	return $post_author_filter;
-
+	return mysqli_query($connection, $query);
 }
-// --------------------------------------------------------------------------------------------//
-//  Function that wil post default picture if the post doesnt have any image assigned to it    //
-// -------------------------------------------------------------------------------------------//
-function imagePlaceholder($image=''){
-	if(!$image){
-		return 'no-image.jpg';
-	}else{
-		return $image;
-	}
-}
+
 // ----------------------------------------------------------//
 //  Function that wil redirect user to a specified path      //
 // ----------------------------------------------------------//
@@ -83,6 +64,38 @@ function isLoggedIn(){
 	return false;
 }
 
+// ------------------------------------------------//
+//  Function that wil return the current user id   //
+// ------------------------------------------------//
+function loggedInUserId(){
+    if(isLoggedIn()){
+        $result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] ."'");
+        confirmQuery($result);
+        $user = mysqli_fetch_array($result);
+        return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
+    }
+    return false;
+
+}
+// -------------------------------------------------------------------//
+//  Function that wil check if a user like that specific post or not  //
+// -------------------------------------------------------------------//
+function userLikedThisPost($post_id){
+    $result = query("SELECT * FROM likes WHERE user_id=" .loggedInUserId() . " AND post_id={$post_id}");
+    confirmQuery($result);
+    return mysqli_num_rows($result) >= 1 ? true : false;
+}
+
+// -------------------------------------------------------------------//
+//  Function that wil check if a user like that specific post or not  //
+// -------------------------------------------------------------------//
+function getPostLikes($post_id){
+
+    $result = query("SELECT * FROM likes WHERE post_id=$post_id");
+    confirmQuery($result);
+    echo mysqli_num_rows($result);
+
+}
 // ------------------------------------------------------------------------//
 //  Function that wil check if a user logged in and redirect it if its yes //
 // ------------------------------------------------------------------------//
@@ -162,7 +175,33 @@ function confirmQuery($result) {
 
 }
 
+// ------------------------------------------------------------//
+//  Function that wil filter post id then return the post user //
+// ------------------------------------------------------------//
+function filterEditPost($the_post_id)
+{
+	global $connection;
 
+	$query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
+	$select_author = mysqli_query($connection, $query);
+	confirmQuery($select_author);
+
+	$row = mysqli_fetch_assoc($select_author);
+	$post_author_filter = $row['post_user'];
+
+	return $post_author_filter;
+
+}
+// --------------------------------------------------------------------------------------------//
+//  Function that wil post default picture if the post doesnt have any image assigned to it    //
+// -------------------------------------------------------------------------------------------//
+function imagePlaceholder($image=''){
+	if(!$image){
+		return 'no-image.jpg';
+	}else{
+		return $image;
+	}
+}
 
 // ----------------------------------------------------//
 //  Displaying count for card-count in index.php admin //
@@ -395,7 +434,7 @@ function register_user($username, $email, $password)
 
 
     $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
-    $query .= "VALUES('{$username}', '{$email}', '{$password}', 'subscriber')";
+    $query .= "VALUES('{$username}', '{$email}', '{$password}', 'Subscriber')";
     $register_user_query = mysqli_query($connection, $query);
 
     confirmQuery($register_user_query);

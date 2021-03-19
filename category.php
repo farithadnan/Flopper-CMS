@@ -28,8 +28,8 @@
 
                                 $stmt = $stmt2;
 
-                                if (mysqli_stmt_num_rows($stmt) === 0 ) {
-                                    echo "<h1 class='text-center'>No posts available for </h1>";
+                                if (mysqli_stmt_num_rows($stmt) === NULL ) {
+                                    echo "<h1 class='text-center'>No posts available. </h1>";
                                 }
                             } 
                         }
@@ -46,8 +46,8 @@
 
                                 $stmt = $stmt3;
 
-                                if (mysqli_stmt_num_rows($stmt) < 1 ) {
-                                    echo "<h1 class='text-center'>No posts available</h1>";
+                                if (mysqli_stmt_num_rows($stmt) === NULL ) {
+                                    echo "<h1 class='text-center'>No posts available.</h1>";
                                 }
                             }
 

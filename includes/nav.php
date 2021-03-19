@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/project/cms/index">CMS Front</a>
+                <a class="navbar-brand" href="/project/cms/index">CMS</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -20,14 +20,25 @@
                       <span class='caret'></span></a>
                         <ul class='dropdown-menu'>
                     <?php 
-                        $query = "SELECT * FROM categories"; //select all from table categories 
+                        $query = "SELECT posts.post_category_id, posts.post_status,";
+                        $query .= " categories.cat_id, categories.cat_title ";
+                        $query .= " FROM posts ";
+                        $query .= " LEFT JOIN categories ON posts.post_category_id =  categories.cat_id";
                         $select_all_categories_query = mysqli_query($connection, $query); //mysqli_query() use to simplify the use of performing query to db
+
+                        $select = mysqli_fetch_array($select_all_categories_query);
+                        $post_status = $select['post_status'];
+
+                        if((($post_status != 'Published')) && (!currentRole() || currentRole() != 'Admin'))
+                        {
+                                echo "<center>No Data</center>"; 
+                        }
 
 
                         while ($row = mysqli_fetch_assoc($select_all_categories_query)) { //amek and tukarkan column kepada key, and anak2 column as value dia s
                             $cat_title = $row['cat_title'];
                             $cat_id = $row['cat_id'];
-                    
+
                             $category_class = '';
                             $registration_class = '';
                             $contact_class = '';
@@ -49,35 +60,27 @@
                                 $contact_class = 'active';
                             }
                             
-                            if($_SESSION['user_role'] != 'Admin')
+                            if(currentRole() != 'Admin')
                             {
                                 $post_query = "SELECT * FROM posts WHERE post_category_id = {$cat_id}";
                                 $select_id = mysqli_query($connection, $post_query);
-                           
 
                                 while($row2 = mysqli_fetch_assoc($select_id))
                                 {
                                     $post_category_id = $row2['post_category_id'];
                                     $post_status = $row2['post_status'];
 
-                                    if($cat_id == $post_category_id && $post_status == 'Published')
+                                    if($post_status == 'Published')
                                     {
                                         echo "<li class='$category_class'><a  href='/project/cms/category/{$cat_id}'>{$cat_title}</a></li>"; 
-                                    }
-                                    else
-                                    {
-                                        echo "<li class='text-center'> <small> No Data </small></li>";
-                                    }
-                                    
-                                }
-                                
+                                    }                                     
+                                }  
                             }
                             else
-                            {
+                            {   
                                 echo "<li class='$category_class'><a  href='/project/cms/category/{$cat_id}'>{$cat_title}</a></li>"; 
                             }
-                                                       
-                            
+                              
                         }                   
                      ?>
                      </ul>
