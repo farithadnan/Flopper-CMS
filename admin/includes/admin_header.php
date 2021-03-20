@@ -10,12 +10,12 @@
         redirect("../index");     
 
     }else{
-        if(!is_admin($_SESSION['username']))
+        if(!is_admin())
         {
             $pagename = basename($_SERVER['PHP_SELF']);
             $categories = 'categories.php';
             $user = 'users.php';
-            if($pagename ==  $categories || $pagename ==  $categories )
+            if($pagename ==  $users)
             {
                 redirect("index");
             }

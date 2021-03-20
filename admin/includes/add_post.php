@@ -3,7 +3,13 @@
 if (isset($_POST['create_post'])) {
 
 	$post_title = escape($_POST['title']);
-	$post_user = escape($_POST['post_user']); // this post user is a user that actually have been created in the system
+	$post_user = escape($_POST['post_user']); 
+
+	$select_user = query("SELECT * FROM users WHERE username = '{$post_user}'");
+	confirmQuery($select_user);
+	$get_id = mysqli_fetch_array($select_user);
+	$user_id = escape($get_id['user_id']);
+
 	$post_category_id = escape($_POST['post_category']);
 	$post_status = escape($_POST['post_status']);
 
@@ -20,9 +26,9 @@ if (isset($_POST['create_post'])) {
 	move_uploaded_file($post_image_temp, "../images/$post_image"); //to move file to the desired location in query below it only stored the file name not its location.
 
 
-	$query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tag,  post_status) ";
+	$query = "INSERT INTO posts(post_category_id, post_title, user_id, post_user, post_date, post_image, post_content, post_tag,  post_status) ";
 
-	$query .= "VALUES({$post_category_id},'$post_title','$post_user', now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_status}')"; //stored the latest date using now() function
+	$query .= "VALUES({$post_category_id},'$post_title', {$user_id}, '$post_user', now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_status}')"; //stored the latest date using now() function
 
 	$create_post_query = mysqli_query($connection, $query);
 

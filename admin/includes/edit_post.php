@@ -15,6 +15,7 @@
 			    while ($row = mysqli_fetch_assoc($select_posts_by_id)) 
 			    { //amek and tukarkan column kepada key, and anak2 column as value dia s
 			        $post_id = escape($row['post_id']);
+			        $user_id = escape($row['user_id']);
 			        $post_user = escape($row['post_user']);
 			        $post_title = escape($row['post_title']);
 			        $post_category_id = escape($row['post_category_id']);
@@ -32,6 +33,12 @@
 				if (isset($_POST['update_post'])) {
 					$post_title = escape($_POST['title']);
 					$post_user = escape($_POST['post_user']);
+
+					$select_user = query("SELECT * FROM users WHERE username = '{$post_user}'");
+					confirmQuery($select_user);
+					$get_id = mysqli_fetch_array($select_user);
+					$user_id = escape($get_id['user_id']);
+
 					$post_category_id = escape($_POST['post_category']);
 					$post_status = escape($_POST['post_status']);
 					$post_image = $_FILES['image']['name']; 
@@ -57,6 +64,7 @@
 					$query .= "post_title = '{$post_title}', ";
 					$query .= "post_category_id = '{$post_category_id}', ";
 					$query .= "post_date = now(), ";
+					$query .= "user_id = '{$user_id}', ";
 					$query .= "post_user = '{$post_user}', ";
 					$query .= "post_status = '{$post_status}', ";
 					$query .= "post_tag = '{$post_tags}', ";

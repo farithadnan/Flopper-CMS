@@ -14,8 +14,8 @@
                     <div class="col-lg-12">
 
                         <h1 class="page-header">
-                            Welcome to <?php echo $_SESSION['user_role']; ?>
-                            <small><?php echo $_SESSION['username']; ?></small>
+                            Post Categories
+                            <small><?php echo ucfirst(currentUser()); ?></small>
                         </h1>
                         <div class="col-xs-6">
                             <?php include("includes/delete_modal.php"); ?>
@@ -24,7 +24,7 @@
                             <form method="post" action="categories.php">
                                 <div class="form-group">
                                     <label for="cat-title" class="for"> Add post Category</label>
-                                    <input class="form-control" type="text" name="cat_title">
+                                    <input class="form-control" type="text" name="cat_title" placeholder="Please enter new category">
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-plus"></i> Add category</button>
@@ -39,7 +39,6 @@
                             <table class="table table-bordered table-hover table-sm table-responsive" style="overflow: auto; ">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Category Title</th>
                                         <th colspan="2">Action</th>
                                     </tr>

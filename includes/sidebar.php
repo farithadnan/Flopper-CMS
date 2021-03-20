@@ -70,50 +70,44 @@
 
     <!-- Blog Categories Well -->
     <div class="well">
-    <?php  
-        $query = "SELECT posts.post_category_id, posts.post_status, ";
-        $query .= "categories.cat_id, categories.cat_title ";
-        $query .= " FROM posts ";
-        $query .= " LEFT JOIN categories ON posts.post_category_id =  categories.cat_id ";
-                                                                     
-        $select_all_categories_sidebar = mysqli_query($connection, $query);
-
-        
-     ?>
         <h4> <span class="glyphicon glyphicon-filter"></span> Blog Categories</h4>
         <div class="row">
             <div class="col-lg-12">
                 <ul class="list-unstyled">
                 <?php 
+                    $query = "SELECT DISTINCT posts.post_category_id, posts.post_status,";
+                    $query .= " categories.cat_id, categories.cat_title ";
+                    $query .= " FROM posts ";
+                    $query .= " INNER JOIN categories ON posts.post_category_id =  categories.cat_id";  
+                    $select_all_categories_sidebar = query($query); 
+                    $count = 0;
+
                     while ($row = mysqli_fetch_assoc($select_all_categories_sidebar)) { //amek and tukarkan column kepada key, and anak2 column as value dia s
                         $cat_title = $row['cat_title'];
                         $cat_id = $row['cat_id'];
                         $post_status = $row['post_status'];
-                        
-                        if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'Admin')
+
+                        if($post_status == 'Published')
+                        {
+                           echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>"; 
+                        }
+                        elseif(!empty($post_status == 'Draft') || ($post_status == 'Draft') )
                         {
                             if($post_status == 'Published')
                             {
-                               echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>"; 
-                               
-                            }
-                            else {
-
-                                 $message = "<br><div class='alert alert-danger'>";
-                                 $message .=  "No categories available. Contact Admin for details.";
-                                 $message .= "</div>";
-                            }
+                                echo "<li class='$category_class'><a  href='/project/cms/category/{$cat_id}'>{$cat_title}</a></li>"; 
+                            } 
                         }
-                        else
-                        {
-                            $message = '';
-                            echo "<li><a href='/project/cms/category/$cat_id'>{$cat_title}</a></li>";
+                        else {
+                            if($count < 1)
+                            {
+                                echo "<br><div class='alert alert-info '>";
+                                echo "Categories unavailable. Please try again later.";
+                                echo "</div>";
+                                $count++;
+                            }
                         }
                     }
-
-                         echo $message;
-                    
-
                 ?>
                 </ul>
             </div>

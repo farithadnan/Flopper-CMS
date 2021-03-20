@@ -73,55 +73,65 @@
                 if(isset($_GET['p_id'])){
 
                 $the_post_id = $_GET['p_id'];
-                
-                $update_statement = mysqli_prepare($connection, "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = ?");
 
+                $check = query("SELECT * FROM posts WHERE post_id = {$the_post_id} AND user_id =".loggedInUserId()."");
+                $fetch = count_records($check);
+                $row = fetchRecords($check);
+                $status = $row['post_status'];
+
+                if($fetch == 0)
+                {
+                    redirect("index");
+                }
+                $update_statement = mysqli_prepare($connection, "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = ?");
                 mysqli_stmt_bind_param($update_statement, "i", $the_post_id);
                 mysqli_stmt_execute($update_statement);
                 confirmQuery($update_statement);
-                
 
-                if (isset($_SESSION['username']) && is_admin($_SESSION['username'])) {
+                if (isLoggedIn()) {
 
-                    $stmt1 = mysqli_prepare($connection, "SELECT post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_id = ?");
+                    $stmt1 = mysqli_prepare($connection, "SELECT post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_id = ? AND post_user = ?");
+
                 }
                 else {
-
-                    $stmt2 = mysqli_prepare($connection , "SELECT post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_id = ? AND post_status = ? ");
-
-                    $published = 'Published';
+                    redirect("index");
+                    // $stmt2 = mysqli_prepare($connection , "SELECT post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_id = ? AND post_status = ? ");
+                    // $published = 'Published';
                 }
 
                 if(isset($stmt1)){
 
-                    mysqli_stmt_bind_param($stmt1, "i", $the_post_id);
+                    mysqli_stmt_bind_param($stmt1, "is", $the_post_id, $_SESSION['username']);
                     mysqli_stmt_execute($stmt1);
-                    mysqli_stmt_bind_result($stmt1, $post_title, $post_author, $post_date, $post_image, $post_content);
+                    mysqli_stmt_bind_result($stmt1, $post_title, $post_user, $post_date, $post_image, $post_content);
 
                     $stmt = $stmt1;
 
-                }else {
-
-                    mysqli_stmt_bind_param($stmt2, "is", $the_post_id, $published);
-                    mysqli_stmt_execute($stmt2);
-                    mysqli_stmt_bind_result($stmt2, $post_title, $post_author, $post_date, $post_image, $post_content);
-
-                    $stmt = $stmt2;
-
                 }
+                // else {
+                //     mysqli_stmt_bind_param($stmt2, "is", $the_post_id, $published);
+                //     mysqli_stmt_execute($stmt2);
+                //     mysqli_stmt_bind_result($stmt2, $post_title, $post_author, $post_date, $post_image, $post_content);
+                //     $stmt = $stmt2;
+                // }
 
                 while(mysqli_stmt_fetch($stmt)) {
                 ?>
 
 
                     <h1 class="page-header">
-                        <span class="glyphicon glyphicon-bookmark"></span> Post
-            
+                        <span class="glyphicon glyphicon-bookmark"></span> Post 
+                        <?php
+                            if($fetch != 0)
+                            {
+                                echo "<div class='pull-right '><small class='text text-warning'> ". $status."</small></div>";
+                            }
+                        ?>
                     </h1>
 
                     <!-- First Blog Post -->
                     <h2>
-                        <a href="#"><?php echo $post_title ?></a>
+                        <a href="#"><?php echo $post_title ?></a> 
                     </h2>
                     <p class="lead">
                         by <a href="/project/cms/index"><?php echo ucfirst($post_user); ?></a>
@@ -281,7 +291,9 @@
 
 
 
-        <?php } }  else {
+        <?php }
+
+         }  else {
                   redirect("index");
                 } 
         ?>

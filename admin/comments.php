@@ -14,8 +14,8 @@
                     <div class="col-lg-12">
 
                         <h1 class="page-header">
-                            Welcome to <?php echo $_SESSION['user_role']; ?>
-                            <small><?php echo $_SESSION['username']; ?></small>
+                            Post Comments 
+                            <small><?php echo ucfirst(currentUser()) ?></small>
                         </h1>
 
                             <?php  

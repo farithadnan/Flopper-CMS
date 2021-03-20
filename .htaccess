@@ -8,6 +8,6 @@ RewriteRule  ^post/(\d+)$ post.php?p_id=$1 [NC,L]
 
 RewriteRule  ^category/(\d+)$ category.php?category=$1 [NC,L]
 
-RewriteRule ^(admin/index|admin/posts|admin/categories|admin/comments|admin/users|admin/profile)$ $1.php [NC,L]
+RewriteRule ^(admin/index|admin/posts|admin/categories|admin/comments|admin/users|admin/profile|admin/dashboard)$ $1.php [NC,L]
 
 
