@@ -4,10 +4,10 @@ Simple CMS Blog with PHP
 A a simple CMS project that uses PHP's fundamental, to create your own wordpress/blogs website. 
 
 
-<p align="center">
+<p align="left">
 <a href="LICENSE"><img src="https://img.shields.io/github/license/ayiedfarith/cms" alt="Software License"></img></a>
-<img src="https://img.shields.io/github/stars/ayiedfarith/cms?color=orange" alt="Star"></img>
-<img src="https://img.shields.io/github/forks/ayiedfarith/cms?color=blue" alt="Forks"></img>
+
+<a href="https://twitter.com/ayiedfarith"><img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fayiedfarith"></img></a>
 </p>
 
 ## Getting Started
