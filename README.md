@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-XAMPP/MAMPP/WAMPP | MYSQL 
+Apache, PHPMYADMIN, PHP (XAMPP/MAMPP/LAMPP), Composer, Mailtrap, env environtment and any IDE
 ```
 
 ### Installing
@@ -63,13 +63,9 @@ Add additional notes about how to deploy this on a live system
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
-* **Farith Syariffudin** - *Initial work* - [ayiedfarith](https://github.com/ayiedfarith)
+* **Farith Syariffudin** [ayiedfarith](https://github.com/ayiedfarith)
 
 ## License
 
