@@ -1,6 +1,7 @@
-# Simple CMS Blog with Procedural PHP
+Simple CMS Blog with PHP
+=======================
 
-Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. This CMS Blog project is created based on a PHP courses in UDEMY which is "PHP for Beginners - Become a PHP Master - CMS Project " - by Edwin Diaz. 
+Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. 
 
 ![Banner](https://cdn.pixabay.com/photo/2016/08/17/04/39/template-1599663_960_720.png)
 
@@ -14,7 +15,7 @@ Simple Content Management System (CMS), is a simple CMS project that uses PHP's 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See below for notes on how to deploy the project on your system.
 
-### Prerequisites
+## Prerequisites
 
 What things you need to install the software and how to install them
 
@@ -27,20 +28,18 @@ What things you need to install the software and how to install them
 6. Sublime, or any code editor
 ```
 
-### Installing
+## Installing
+First, Installing XAMPP 
+For Windows/Mac - (<a href="https://www.apachefriends.org/download.html">Downloads</a>)
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+For <a href="https://www.apachefriends.org/download.html">Linux</a>, Choose your flavor for your linux OS, the 32-bit or 64-bit version, then change the permissions to the installer by:
 ```
-Give the example
+chmod 755 xampp-linux-*-installer.run
 ```
 
-And repeat
-
+Run the installer
 ```
-until finished
+sudo ./xampp-linux-*-installer.run
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
@@ -77,11 +76,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* **Farith Syariffudin** [ayiedfarith](https://github.com/ayiedfarith)
+* **Farith Syariffudin** - ([ayiedfarith](https://github.com/ayiedfarith))
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ayiedfarith/cms/blob/main/LICENSE) file for details
 
 ## Acknowledgments
 
