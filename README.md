@@ -1,78 +1,36 @@
 Simple CMS Blog with PHP
 =======================
 
-Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. 
+A a simple CMS project that uses PHP's fundamental, to create your own wordpress/blogs website. 
 
 ![Banner](https://cdn.pixabay.com/photo/2016/08/17/04/39/template-1599663_960_720.png)
 
 <p align="center">
 <a href="LICENSE"><img src="https://img.shields.io/github/license/ayiedfarith/cms" alt="Software License"></img></a>
-<img src="https://img.shields.io/github/stars/ayiedfarith/cms?color=orange" alt="Total Downloads"></img>
-<img src="https://img.shields.io/github/forks/ayiedfarith/cms?color=blue" alt="Latest Version"></img>
+<img src="https://img.shields.io/github/stars/ayiedfarith/cms?color=orange" alt="Star"></img>
+<img src="https://img.shields.io/github/forks/ayiedfarith/cms?color=blue" alt="Forks"></img>
 </p>
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See below for notes on how to deploy the project on your system.
 
-## Prerequisites
+## Prerequisites Installation
 
-What things you need to install the software and how to install them
+Below is the neccesary software that you need to download before running this project in your system, you need to make sure that all the software below  is succesfully installed.
 
 ```
 1. (XAMPP/MAMPP/LAMPP)
 2. Git
 3. Composer
-4. Mailtrap's
+4. Mailtrap's (Open Mailtrap account and setup mailtrap based on your credential)
 5. env environtment
 6. Sublime, or any code editor
 ```
+## Setting up your Database
+Next, you need to create new database call `cms` at phpmyadmin, next you need to choose the newly created database, and you need to choose import. Afterward, you need to import `cms.sql` into Phpmyadmin. After importing you need to enter your own credential to the users table in `cms` database, so that you can login into the system without a problem, after that make sure you have created and setup `.env` files, you can check `.env.example` for more information. 
 
-## Installing
-First, Installing XAMPP 
-For Windows/Mac - (<a href="https://www.apachefriends.org/download.html">Downloads</a>)
-
-For <a href="https://www.apachefriends.org/download.html">Linux</a>, Choose your flavor for your linux OS, the 32-bit or 64-bit version, then change the permissions to the installer by:
-```
-chmod 755 xampp-linux-*-installer.run
-```
-
-Run the installer
-```
-sudo ./xampp-linux-*-installer.run
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+After all that is done, now you can login into your system.
 
 ## Authors
 
@@ -81,12 +39,5 @@ Add additional notes about how to deploy this on a live system
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ayiedfarith/cms/blob/main/LICENSE) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
 
 
