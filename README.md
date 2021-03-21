@@ -3,7 +3,6 @@ Simple CMS Blog with PHP
 
 A a simple CMS project that uses PHP's fundamental, to create your own wordpress/blogs website. 
 
-![Banner](https://cdn.pixabay.com/photo/2016/08/17/04/39/template-1599663_960_720.png)
 
 <p align="center">
 <a href="LICENSE"><img src="https://img.shields.io/github/license/ayiedfarith/cms" alt="Software License"></img></a>
