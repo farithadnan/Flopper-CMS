@@ -1,6 +1,6 @@
 # Creating simple CMS Blog with Procedural PHP
 
-Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental like, variables, prepare statement, get, post request, array and etc. This project purposes is only being used for self-learning in using PHP in the web development. This project is created based on a PHP courses in UDEMY which is "PHP for Beginners - Become a PHP Master - CMS Project " - by Edwin Diaz. This CMS blog also uses outsource library in its development, such as mailtrap, pusher, bootstrap composer & ckeditor.
+Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. This CMS Blog project is created based on a PHP courses in UDEMY which is "PHP for Beginners - Become a PHP Master - CMS Project " - by Edwin Diaz. This CMS blog also uses outsource library in its development, such as mailtrap, pusher, bootstrap composer & ckeditor.
 
 
 ## Getting Started
