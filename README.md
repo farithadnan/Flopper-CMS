@@ -6,8 +6,6 @@ A a simple CMS project that uses PHP's fundamental, to create your own wordpress
 
 <p align="left">
 <a href="LICENSE"><img src="https://img.shields.io/github/license/ayiedfarith/cms" alt="Software License"></img></a>
-
-<a href="https://twitter.com/ayiedfarith"><img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fayiedfarith"></img></a>
 </p>
 
 ## Getting Started
