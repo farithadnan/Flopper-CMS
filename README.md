@@ -2,7 +2,13 @@
 
 Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. This CMS Blog project is created based on a PHP courses in UDEMY which is "PHP for Beginners - Become a PHP Master - CMS Project " - by Edwin Diaz. 
 
-![Banner](https://freerangestock.com/sample/61328/content-management-systems--cms-programming-and-development.jpg)
+![Banner](https://cdn.pixabay.com/photo/2016/08/17/04/39/template-1599663_960_720.png)
+
+<p align="center">
+<a href="LICENSE"><img src="https://img.shields.io/github/license/ayiedfarith/cms" alt="Software License"></img></a>
+<img src="https://img.shields.io/github/stars/ayiedfarith/cms?color=orange" alt="Total Downloads"></img>
+<img src="https://img.shields.io/github/forks/ayiedfarith/cms?color=blue" alt="Latest Version"></img>
+</p>
 
 ## Getting Started
 
