@@ -12,14 +12,11 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-(XAMPP/MAMPP/LAMPP)
-1. Apache 
-2. PHPMYADMIN 
-3. PHP
-4. Composer
-5. Mailtrap's Account
-6. env environtment
-7. Sublime, or any code editor
+1. (XAMPP/MAMPP/LAMPP)
+2. Composer
+3. Mailtrap's Account
+4. env environtment
+5. Sublime, or any code editor
 ```
 
 ### Installing
