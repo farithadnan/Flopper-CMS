@@ -1,7 +1,8 @@
-# Creating simple CMS Blog with Procedural PHP
+# Simple CMS Blog with Procedural PHP
 
-Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. This CMS Blog project is created based on a PHP courses in UDEMY which is "PHP for Beginners - Become a PHP Master - CMS Project " - by Edwin Diaz. This CMS blog also uses outsource library in its development, such as mailtrap, pusher, bootstrap composer & ckeditor.
+Simple Content Management System (CMS), is a simple CMS project that uses PHP's fundamental. This CMS Blog project is created based on a PHP courses in UDEMY which is "PHP for Beginners - Become a PHP Master - CMS Project " - by Edwin Diaz. 
 
+![Banner](https://freerangestock.com/sample/61328/content-management-systems--cms-programming-and-development.jpg)
 
 ## Getting Started
 
@@ -13,10 +14,11 @@ What things you need to install the software and how to install them
 
 ```
 1. (XAMPP/MAMPP/LAMPP)
-2. Composer
-3. Mailtrap's Account
-4. env environtment
-5. Sublime, or any code editor
+2. Git
+3. Composer
+4. Mailtrap's
+5. env environtment
+6. Sublime, or any code editor
 ```
 
 ### Installing
