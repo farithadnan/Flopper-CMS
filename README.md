@@ -1,4 +1,4 @@
-Simple CMS Blog with PHP
+Flopper-CMS Blog with PHP
 =======================
 
 A a simple CMS project that uses PHP's fundamental, to create your own wordpress/blogs website. 
